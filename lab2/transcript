@@ -1,0 +1,748 @@
+# //  ModelSim SE-64 6.5c Aug 27 2009 Linux 2.6.32-504.8.1.el6.x86_64
+# //
+# //  Copyright 1991-2009 Mentor Graphics Corporation
+# //              All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND 
+# //  PROPRIETARY INFORMATION WHICH IS THE PROPERTY
+# //  OF MENTOR GRAPHICS CORPORATION OR ITS LICENSORS
+# //  AND IS SUBJECT TO LICENSE TERMS.
+# //
+vsim -voptargs=+acc work.nbit_full_adder
+# vsim -voptargs=+acc work.nbit_full_adder 
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Error: Failed to find design unit work.nbit_full_adder.
+# Optimization failed
+# Error loading design
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_full_adder.vhdl
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity nbit_full_adder
+# -- Compiling architecture structure of nbit_full_adder
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder.vhdl(64): Prefix of indexed name must be an array.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder.vhdl(64): Indexed name is type (error); expecting type ieee.std_logic_1164.std_logic.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder.vhdl(74): Prefix of indexed name must be an array.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder.vhdl(75): Cannot read output "o_c".
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder.vhdl(74): Indexed name is type (error); expecting type ieee.std_logic_1164.std_logic.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder.vhdl(78): Prefix of indexed name must be an array.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder.vhdl(80): Cannot read output "o_c".
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder.vhdl(78): Indexed name is type (error); expecting type ieee.std_logic_1164.std_logic.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder.vhdl(90): Prefix of indexed name must be an array.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder.vhdl(90): Indexed name is type (error); expecting type ieee.std_logic_1164.std_logic.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder.vhdl(93): VHDL Compiler exiting
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_full_adder.vhdl
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity nbit_full_adder
+# -- Compiling architecture structure of nbit_full_adder
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder.vhdl(78): Prefix of indexed name must be an array.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder.vhdl(80): Cannot read output "o_c".
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder.vhdl(78): Indexed name is type (error); expecting type ieee.std_logic_1164.std_logic.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder.vhdl(93): Symbol "g_xor" has already been declared in this region.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder.vhdl(98): Symbol "g_xor_2" has already been declared in this region.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder.vhdl(103): Symbol "g_and_1" has already been declared in this region.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder.vhdl(108): Symbol "g_and_2" has already been declared in this region.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder.vhdl(113): Symbol "g_or" has already been declared in this region.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder.vhdl(118): VHDL Compiler exiting
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_full_adder.vhdl
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity nbit_full_adder
+# -- Compiling architecture structure of nbit_full_adder
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder.vhdl(78): Prefix of indexed name must be an array.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder.vhdl(80): Cannot read output "o_c".
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder.vhdl(78): Indexed name is type (error); expecting type ieee.std_logic_1164.std_logic.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder.vhdl(108): Symbol "g_and_5" has already been declared in this region.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder.vhdl(118): VHDL Compiler exiting
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_full_adder.vhdl
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity nbit_full_adder
+# -- Compiling architecture structure of nbit_full_adder
+vsim work.nbit_full_adder
+# vsim work.nbit_full_adder 
+# ** Note: (vsim-3812) Design is being optimized...
+# Loading std.standard
+# Loading ieee.std_logic_1164(body)
+# Loading work.nbit_full_adder(structure)#1
+force -freeze sim:/nbit_full_adder/i_a 00000000000000000000000000010000 0
+force -freeze sim:/nbit_full_adder/i_b 0000000000000000000000000000000 0
+# Value length (31) does not equal array index length (32).
+# 
+# ** Error: (vsim-4011) Invalid force value: 0000000000000000000000000000000 0.
+# 
+force -freeze sim:/nbit_full_adder/i_b 00000000000000000000000000000000 0
+force -freeze sim:/nbit_full_adder/i_c 1 0
+sim 1000
+# bad option "1000": must be blank, cget, configure, copy, data, get, put, read, redither, transparency, or write
+run 100
+run 100
+run 1000
+run 5000
+force -freeze sim:/nbit_full_adder/i_b 00000000000000000000000000000010 0
+run 4000
+force -freeze sim:/nbit_full_adder/i_b 00000000000000000000000000000011 0
+run 4000
+quit -sim
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_full_adder.vhdl
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity nbit_full_adder
+# -- Compiling architecture structure of nbit_full_adder
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd(1): near "EOF": syntax error
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity n_in_dataflow_multiplexer
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd(13): near "signal": syntax error
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity n_in_dataflow_multiplexer
+# -- Compiling architecture dataflow of n_in_dataflow_multiplexer
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd(25): (vcom-1136) Unknown identifier "s_value_ax".
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd(25): Type error resolving infix expression "xor" as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd(26): (vcom-1136) Unknown identifier "s_value_ax".
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd(26): Bad expression in left operand of infix expression "or".
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd(26): Bad right hand side (infix expression) in signal assignment.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd(29): (vcom-1136) Unknown identifier "s_value_ax".
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd(29): Bad right hand side (infix expression) in signal assignment.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd(30): (vcom-1136) Unknown identifier "s_value_ax".
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd(30): Bad expression in left operand of infix expression "or".
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd(30): Type error resolving infix expression "or" as type ieee.std_logic_1164.std_logic.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd(33): VHDL Compiler exiting
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity n_in_dataflow_multiplexer
+# -- Compiling architecture dataflow of n_in_dataflow_multiplexer
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd(25): Type error resolving infix expression "xor" as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd(33): VHDL Compiler exiting
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/multiplexer_nbit_dataflow.vhdl
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity n_in_dataflow_multiplexer
+# -- Compiling architecture dataflow of n_in_dataflow_multiplexer
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity n_in_dataflow_multiplexer
+# -- Compiling architecture dataflow of n_in_dataflow_multiplexer
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd(25): Type error resolving infix expression "xor" as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd(33): VHDL Compiler exiting
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/multiplexer_nbit_dataflow.vhdl
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity n_in_dataflow_multiplexer
+# -- Compiling architecture dataflow of n_in_dataflow_multiplexer
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity n_in_dataflow_multiplexer
+# -- Compiling architecture dataflow of n_in_dataflow_multiplexer
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd(25): Type error resolving infix expression "xor" as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd(33): VHDL Compiler exiting
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity n_in_dataflow_multiplexer
+# -- Compiling architecture dataflow of n_in_dataflow_multiplexer
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd(25): Type error resolving infix expression "xor" as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd(33): VHDL Compiler exiting
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity n_in_dataflow_multiplexer
+# -- Compiling architecture dataflow of n_in_dataflow_multiplexer
+vlog -work /home/tstapler/CPRE381/lab2/work -refresh
+# Model Technology ModelSim SE-64 vlog 6.5c Compiler 2009.08 Aug 27 2009
+# -- Skipping entity and2
+# -- Skipping entity full_adder
+# -- Skipping entity generate_example
+# -- Skipping entity inv
+# -- Skipping entity n_in_dataflow_multiplexer
+# -- Skipping entity n_in_multiplexer
+# -- Skipping entity nbit_full_adder
+# -- Skipping entity ones_compliment
+# -- Skipping entity ones_compliment_data
+# -- Skipping entity ones_compliment_structure
+# -- Skipping entity or2
+# -- Skipping entity tb_and2
+# -- Skipping entity test_bench
+# -- Skipping entity two_in_multiplexer
+# -- Skipping entity xor2
+vcom -work /home/tstapler/CPRE381/lab2/work -refresh
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity and2
+# -- Compiling architecture dataflow of and2
+# -- Compiling entity full_adder
+# -- Compiling architecture structure of full_adder
+# -- Compiling entity generate_example
+# -- Compiling architecture structure of generate_example
+# -- Compiling entity inv
+# -- Compiling architecture dataflow of inv
+# -- Compiling entity n_in_dataflow_multiplexer
+# -- Compiling architecture dataflow of n_in_dataflow_multiplexer
+# -- Compiling entity n_in_multiplexer
+# -- Compiling architecture structure of n_in_multiplexer
+# -- Compiling entity nbit_full_adder
+# -- Compiling architecture structure of nbit_full_adder
+# -- Compiling entity ones_compliment
+# -- Compiling architecture structure of ones_compliment
+# -- Compiling entity ones_compliment_data
+# -- Compiling architecture dataflow of ones_compliment_data
+# -- Compiling entity ones_compliment_structure
+# -- Compiling architecture structure of ones_compliment_structure
+# -- Compiling entity or2
+# -- Compiling architecture dataflow of or2
+# -- Compiling entity tb_and2
+# -- Compiling architecture behavior of tb_and2
+# -- Compiling entity test_bench
+# -- Compiling architecture behavior of test_bench
+# -- Loading entity ones_compliment_structure
+# -- Compiling entity two_in_multiplexer
+# -- Compiling architecture structure of two_in_multiplexer
+# -- Compiling entity xor2
+# -- Compiling architecture dataflow of xor2
+vlog -work /home/tstapler/CPRE381/lab2/work -refresh
+# Model Technology ModelSim SE-64 vlog 6.5c Compiler 2009.08 Aug 27 2009
+# -- Skipping entity and2
+# -- Skipping entity full_adder
+# -- Skipping entity generate_example
+# -- Skipping entity inv
+# -- Skipping entity n_in_dataflow_multiplexer
+# -- Skipping entity n_in_multiplexer
+# -- Skipping entity nbit_full_adder
+# -- Skipping entity ones_compliment
+# -- Skipping entity ones_compliment_data
+# -- Skipping entity ones_compliment_structure
+# -- Skipping entity or2
+# -- Skipping entity tb_and2
+# -- Skipping entity test_bench
+# -- Skipping entity two_in_multiplexer
+# -- Skipping entity xor2
+vcom -work /home/tstapler/CPRE381/lab2/work -refresh
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity and2
+# -- Compiling architecture dataflow of and2
+# -- Compiling entity full_adder
+# -- Compiling architecture structure of full_adder
+# -- Compiling entity generate_example
+# -- Compiling architecture structure of generate_example
+# -- Compiling entity inv
+# -- Compiling architecture dataflow of inv
+# -- Compiling entity n_in_dataflow_multiplexer
+# -- Compiling architecture dataflow of n_in_dataflow_multiplexer
+# -- Compiling entity n_in_multiplexer
+# -- Compiling architecture structure of n_in_multiplexer
+# -- Compiling entity nbit_full_adder
+# -- Compiling architecture structure of nbit_full_adder
+# -- Compiling entity ones_compliment
+# -- Compiling architecture structure of ones_compliment
+# -- Compiling entity ones_compliment_data
+# -- Compiling architecture dataflow of ones_compliment_data
+# -- Compiling entity ones_compliment_structure
+# -- Compiling architecture structure of ones_compliment_structure
+# -- Compiling entity or2
+# -- Compiling architecture dataflow of or2
+# -- Compiling entity tb_and2
+# -- Compiling architecture behavior of tb_and2
+# -- Compiling entity test_bench
+# -- Compiling architecture behavior of test_bench
+# -- Loading entity ones_compliment_structure
+# -- Compiling entity two_in_multiplexer
+# -- Compiling architecture structure of two_in_multiplexer
+# -- Compiling entity xor2
+# -- Compiling architecture dataflow of xor2
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity n_in_dataflow_multiplexer
+# -- Compiling architecture dataflow of n_in_dataflow_multiplexer
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity n_in_dataflow_multiplexer
+# -- Compiling architecture dataflow of n_in_dataflow_multiplexer
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# ** Warning: (vcom-6) -- Waiting for lock by "tstapler@co2048-13.ece.iastate.edu". Lockfile is "/home/tstapler/CPRE381/lab2/work/_lock".
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# ** Warning: (vcom-6) -- Waiting for lock by "tstapler@co2048-13.ece.iastate.edu". Lockfile is "/home/tstapler/CPRE381/lab2/work/_lock".
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# ** Warning: (vcom-6) -- Waiting for lock by "tstapler@co2048-13.ece.iastate.edu". Lockfile is "/home/tstapler/CPRE381/lab2/work/_lock".
+# -- Compiling entity n_in_dataflow_multiplexer
+# -- Compiling architecture dataflow of n_in_dataflow_multiplexer
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# ** Warning: (vcom-6) -- Waiting for lock by "tstapler@co2048-13.ece.iastate.edu". Lockfile is "/home/tstapler/CPRE381/lab2/work/_lock".
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity n_in_dataflow_multiplexer
+# -- Compiling architecture dataflow of n_in_dataflow_multiplexer
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity n_in_dataflow_multiplexer
+# -- Compiling architecture dataflow of n_in_dataflow_multiplexer
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity n_in_dataflow_multiplexer
+# -- Compiling architecture dataflow of n_in_dataflow_multiplexer
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity n_in_dataflow_multiplexer
+# -- Compiling architecture dataflow of n_in_dataflow_multiplexer
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity n_in_dataflow_multiplexer
+# -- Compiling architecture dataflow of n_in_dataflow_multiplexer
+# Load canceled
+vsim work.n_in_dataflow_multiplexer(dataflow)
+# vsim work.n_in_dataflow_multiplexer(dataflow) 
+# ** Note: (vsim-3812) Design is being optimized...
+# Loading std.standard
+# Loading ieee.std_logic_1164(body)
+# Loading work.n_in_dataflow_multiplexer(dataflow)#1
+quit -sim
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity n_bit_full_adder_dataf
+# -- Compiling architecture dataflow of n_bit_full_adder_dataf
+vsim work.n_bit_full_adder_dataf
+# vsim work.n_bit_full_adder_dataf 
+# ** Note: (vsim-3812) Design is being optimized...
+# Loading std.standard
+# Loading ieee.std_logic_1164(body)
+# Loading work.n_bit_full_adder_dataf(dataflow)#1
+force -freeze sim:/n_bit_full_adder_dataf/i_a 00000000000000000000000000001010 0
+force -freeze sim:/n_bit_full_adder_dataf/i_b 00000000000000000000000000000010 0
+force -freeze sim:/n_bit_full_adder_dataf/i_c 0 0
+add wave \
+{sim:/n_bit_full_adder_dataf/n } \
+{sim:/n_bit_full_adder_dataf/i_a } \
+{sim:/n_bit_full_adder_dataf/i_b } \
+{sim:/n_bit_full_adder_dataf/i_c } \
+{sim:/n_bit_full_adder_dataf/o_f } \
+{sim:/n_bit_full_adder_dataf/o_c } \
+{sim:/n_bit_full_adder_dataf/svalue_ax } 
+run 5000
+run 5000
+force -freeze sim:/n_bit_full_adder_dataf/i_c 1 0
+run 5000
+force -freeze sim:/n_bit_full_adder_dataf/i_b 00000000000000000000000000000011 0
+run 5000
+quit -sim
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity nbit_adder_sub
+# -- Compiling architecture structure of nbit_adder_sub
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(56): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(57): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(58): Integer literal 0 is not of type ieee.std_logic_1164.std_logic.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(59): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(75): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(76): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(78): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(83): Symbol "g_inv1" has already been declared in this region.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(87): Symbol "g_mux1" has already been declared in this region.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(93): Symbol "g_fulladd1" has already been declared in this region.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(94): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(95): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(97): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(100): VHDL Compiler exiting
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity nbit_adder_sub
+# -- Compiling architecture structure of nbit_adder_sub
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(56): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(57): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(58): Integer literal 0 is not of type ieee.std_logic_1164.std_logic.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(59): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(75): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(76): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(78): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(83): Symbol "g_inv1" has already been declared in this region.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(87): Symbol "g_mux1" has already been declared in this region.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(93): Symbol "g_fulladd1" has already been declared in this region.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(94): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(95): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(97): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(100): VHDL Compiler exiting
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity nbit_adder_sub
+# -- Compiling architecture structure of nbit_adder_sub
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(55): (vcom-1141) Identifier "nbit_full_adder" does not identify a component declaration.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(74): (vcom-1141) Identifier "nbit_full_adder" does not identify a component declaration.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(93): (vcom-1141) Identifier "nbit_full_adder" does not identify a component declaration.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(100): VHDL Compiler exiting
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity nbit_adder_sub
+# -- Compiling architecture structure of nbit_adder_sub
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(56): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(57): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(58): Integer literal 0 is not of type ieee.std_logic_1164.std_logic.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(59): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(75): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(76): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(78): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(94): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(95): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(97): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(100): VHDL Compiler exiting
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/full_adder.vhdl
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity full_adder
+# -- Compiling architecture structure of full_adder
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity nbit_adder_sub
+# -- Compiling architecture structure of nbit_adder_sub
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(57): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(58): Integer literal 0 is not of type ieee.std_logic_1164.std_logic.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(59): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(75): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(76): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(78): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(94): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(95): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(97): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(100): VHDL Compiler exiting
+vsim work.n_bit_full_adder_dataf
+# vsim work.n_bit_full_adder_dataf 
+# Loading std.standard
+# Loading ieee.std_logic_1164(body)
+# Loading work.n_bit_full_adder_dataf(dataflow)#1
+quit -sim
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity nbit_adder_sub
+# -- Compiling architecture structure of nbit_adder_sub
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(57): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(58): Integer literal 0 is not of type ieee.std_logic_1164.std_logic.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(59): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(75): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(76): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(78): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(94): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(95): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(97): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(100): VHDL Compiler exiting
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity nbit_adder_sub
+# -- Compiling architecture structure of nbit_adder_sub
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(57): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(58): Integer literal 0 is not of type ieee.std_logic_1164.std_logic.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(59): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(75): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(76): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(78): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(94): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(95): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(97): Cannot resolve indexed name as type ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(100): VHDL Compiler exiting
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity nbit_adder_sub
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# ** Warning: (vcom-6) -- Waiting for lock by "tstapler@co2048-13.ece.iastate.edu". Lockfile is "/home/tstapler/CPRE381/lab2/work/_lock".
+# -- Compiling architecture structure of nbit_adder_sub
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(58): Integer literal 0 is not of type ieee.std_logic_1164.std_logic.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(100): VHDL Compiler exiting
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity nbit_adder_sub
+# -- Compiling architecture structure of nbit_adder_sub
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(58): Integer literal 0 is not of type ieee.std_logic_1164.std_logic.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(100): VHDL Compiler exiting
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity nbit_adder_sub
+# -- Compiling architecture structure of nbit_adder_sub
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(58): Enumeration literal "false" is type std.standard.boolean; expecting type ieee.std_logic_1164.std_logic.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(100): VHDL Compiler exiting
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity nbit_adder_sub
+# -- Compiling architecture structure of nbit_adder_sub
+vsim work.nbit_adder_sub
+# vsim work.nbit_adder_sub 
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(98): (vopt-1152) Index value 31 is out of index range 30 downto 0 of ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(100): Vopt Compiler exiting
+# Error loading design
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity nbit_adder_sub
+# -- Compiling architecture structure of nbit_adder_sub
+vsim work.nbit_adder_sub
+# vsim work.nbit_adder_sub 
+# ** Note: (vsim-3812) Design is being optimized...
+# Loading std.standard
+# Loading ieee.std_logic_1164(body)
+# Loading work.nbit_adder_sub(structure)#1
+force -freeze sim:/nbit_adder_sub/i_a 00000000000000000000000000000011 0
+force -freeze sim:/nbit_adder_sub/i_b 00000000000000000000000000001100 0
+force -freeze sim:/nbit_adder_sub/n_add_sub 1 0
+run 5000
+force -freeze sim:/nbit_adder_sub/i_a 00000000000000000000000000111111 0
+force -freeze sim:/nbit_adder_sub/n_add_sub 0 0
+run 5000
+force -freeze sim:/nbit_adder_sub/n_add_sub 1 0
+run 4000
+add wave \
+{sim:/nbit_adder_sub/n } \
+{sim:/nbit_adder_sub/i_a } \
+{sim:/nbit_adder_sub/i_b } \
+{sim:/nbit_adder_sub/n_add_sub } \
+{sim:/nbit_adder_sub/o_f } \
+{sim:/nbit_adder_sub/o_c } \
+{sim:/nbit_adder_sub/svalue_ax } \
+{sim:/nbit_adder_sub/svalue_bx } \
+{sim:/nbit_adder_sub/svalue_cx } 
+run 4000
+run 4000
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity nbit_adder_sub
+# -- Compiling architecture structure of nbit_adder_sub
+quit -sim
+vsim work.nbit_adder_sub
+# vsim work.nbit_adder_sub 
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading std.standard
+# Loading ieee.std_logic_1164(body)
+# Loading work.nbit_adder_sub(structure)#1
+add wave \
+{sim:/nbit_adder_sub/i_a } \
+{sim:/nbit_adder_sub/i_b } \
+{sim:/nbit_adder_sub/n_add_sub } \
+{sim:/nbit_adder_sub/o_f } \
+{sim:/nbit_adder_sub/o_c } 
+force -freeze sim:/nbit_adder_sub/i_a 11110000 0
+force -freeze sim:/nbit_adder_sub/i_b 00000000 0
+force -freeze sim:/nbit_adder_sub/n_add_sub 0 0
+run 400
+force -freeze sim:/nbit_adder_sub/n_add_sub 1 0
+run 500
+force -freeze sim:/nbit_adder_sub/i_b 00000011 0
+1000
+# invalid command name "1000"
+run 1000
+run 1000
+run 1000
+force -freeze sim:/nbit_adder_sub/n_add_sub 0 0
+force -freeze sim:/nbit_adder_sub/n_add_sub 0 0
+run 1000
+# ** Error: (vsim-3601) Iteration limit reached at time 3900 ns.
+quit -sim
+# Optimization canceled
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity nbit_adder_sub
+# -- Compiling architecture structure of nbit_adder_sub
+vsim -voptargs=+acc work.nbit_adder_sub
+# vsim work.nbit_adder_sub 
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading std.standard
+# Loading ieee.std_logic_1164(body)
+# Loading work.nbit_adder_sub(structure)#1
+force -freeze sim:/nbit_adder_sub/i_a 11110000 0
+force -freeze sim:/nbit_adder_sub/i_b 00000011 0
+force -freeze sim:/nbit_adder_sub/n_add_sub 1 0
+add wave \
+{sim:/nbit_adder_sub/i_a } \
+{sim:/nbit_adder_sub/i_b } \
+{sim:/nbit_adder_sub/o_f } 
+run 1000
+run 1000
+run 1000
+run 1000
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity nbit_adder_sub
+# -- Compiling architecture structure of nbit_adder_sub
+quit -sim
+vsim -voptargs=+acc work.nbit_adder_sub
+# vsim work.nbit_adder_sub 
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(98): (vopt-1152) Index value 7 is out of index range 6 downto 0 of ieee.std_logic_1164.std_logic_vector.
+# ** Error: /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd(100): Vopt Compiler exiting
+# Error loading design
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity nbit_adder_sub
+# -- Compiling architecture structure of nbit_adder_sub
+vsim -voptargs=+acc work.nbit_adder_sub
+# vsim work.nbit_adder_sub 
+# ** Note: (vsim-3812) Design is being optimized...
+# Loading std.standard
+# Loading ieee.std_logic_1164(body)
+# Loading work.nbit_adder_sub(structure)#1
+force -freeze sim:/nbit_adder_sub/i_a 11110000 0
+force -freeze sim:/nbit_adder_sub/i_b 00000011 0
+force -freeze sim:/nbit_adder_sub/n_add_sub 1 0
+add wave \
+{sim:/nbit_adder_sub/i_a } \
+{sim:/nbit_adder_sub/i_b } \
+{sim:/nbit_adder_sub/o_f } 
+run 1000
+force -freeze sim:/nbit_adder_sub/n_add_sub 0 0
+run 1000
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity nbit_adder_sub
+# -- Compiling architecture structure of nbit_adder_sub
+vsim work.nbit_adder_sub
+# vsim work.nbit_adder_sub 
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading std.standard
+# Loading ieee.std_logic_1164(body)
+# Loading work.nbit_adder_sub(structure)#1
+force -freeze sim:/nbit_adder_sub/i_a 11110000 0
+force -freeze sim:/nbit_adder_sub/i_b 00000011 0
+force -freeze sim:/nbit_adder_sub/n_add_sub 1 0
+add wave \
+{sim:/nbit_adder_sub/i_a } \
+{sim:/nbit_adder_sub/i_b } \
+{sim:/nbit_adder_sub/o_f } 
+run 100
+force -freeze sim:/nbit_adder_sub/n_add_sub 0 0
+run 100
+force -freeze sim:/nbit_adder_sub/n_add_sub 1 0
+force -freeze sim:/nbit_adder_sub/n_add_sub 1 0
+run 100
+force -freeze sim:/nbit_adder_sub/n_add_sub 0 0
+run 100
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity nbit_adder_sub
+# -- Compiling architecture structure of nbit_adder_sub
+vsim work.nbit_adder_sub
+# vsim work.nbit_adder_sub 
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading std.standard
+# Loading ieee.std_logic_1164(body)
+# Loading work.nbit_adder_sub(structure)#1
+force -freeze sim:/nbit_adder_sub/i_b 00000011 0
+force -freeze sim:/nbit_adder_sub/i_a 11110000 0
+force -freeze sim:/nbit_adder_sub/n_add_sub 0 0
+add wave \
+{sim:/nbit_adder_sub/i_a } \
+{sim:/nbit_adder_sub/i_b } \
+{sim:/nbit_adder_sub/o_f } 
+run 1000
+force -freeze sim:/nbit_adder_sub/n_add_sub 1 0
+run 1000
+force -freeze sim:/nbit_adder_sub/i_b 00000001 0
+force -freeze sim:/nbit_adder_sub/i_a 00000001 0
+run 100
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity nbit_adder_sub
+# -- Compiling architecture structure of nbit_adder_sub
+quit -sim
+vsim -voptargs=+acc work.nbit_adder_sub
+# vsim work.nbit_adder_sub 
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading std.standard
+# Loading ieee.std_logic_1164(body)
+# Loading work.nbit_adder_sub(structure)#1
+force -freeze sim:/nbit_adder_sub/i_a 00000001 0
+force -freeze sim:/nbit_adder_sub/i_b 00000001 0
+force -freeze sim:/nbit_adder_sub/n_add_sub 1 0
+run 100
+force -freeze sim:/nbit_adder_sub/i_a 11000001 0
+run 100
+add wave \
+{sim:/nbit_adder_sub/i_a } \
+{sim:/nbit_adder_sub/i_b } \
+{sim:/nbit_adder_sub/o_f } 
+run 100
+run 100
+run 100
+run 100
+force -freeze sim:/nbit_adder_sub/i_b 11000001 0
+run 100
+run 100
+run 100
+force -freeze sim:/nbit_adder_sub/n_add_sub 0 0
+run 1000
+run 1000
+force -freeze sim:/nbit_adder_sub/i_b 00001001 0
+run 1000
+run 100

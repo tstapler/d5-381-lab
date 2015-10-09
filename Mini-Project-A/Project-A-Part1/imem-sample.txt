@@ -1,0 +1,45 @@
+DEPTH=1024; 	% Memory depth and width are required 
+		% DEPTH is the number of addresses 
+WIDTH = 32; 	% WIDTH is the number of bits of data per word
+		% DEPTH and WIDTH should be entered as decimal numbers
+
+ADDRESS_RADIX = DEC; 	% Address and value radixes are required
+DATA_RADIX = BIN; 	% Enter BIN, DEC, HEX, OCT, or UNS; unless
+			% otherwise specified, radixes = HEX
+
+-- Specify values for addresses, which can be single address or range
+-- SOME THINGS TO CONSIDER
+-- 1) This memory is word-addressable, versus the MIPS conceptual byte-addressable memory.
+--    This means that address 1 corresponds to word 1, address 2 corresponds to word 2, etc.
+--    Since MIPS will be generating byte addresses, you will have to create some (very simple)
+--    logic in your VHDL wrapper to deal with byte/word offsets. 
+-- 2) The "single address" notation seems to be least likely to cause confusion so that is what
+--    I recommend. 
+-- 3) The values need to be in 32-bit hex form (i.e. don't use F when you really mean 0000000F).
+
+-- Sample C code:
+--   if (a != b) c = a + b;
+-- Assume a @ 0x0000($zero), b @ 0x0004($zero), c @ 0x0008($zero0
+-- Assembly code:
+--      lw   $t0, 0($zero)
+--      lw   $t1, 4($zero)
+--      beq  $t0, $t1, +2
+--      add  $t0, $t0, $t1
+--      sw   $t0, 8($zero)
+--      noop
+--      beq  $zero, $zero, -1    # idle loop
+CONTENT
+BEGIN
+-- Instruction formats
+--R ======-----=====-----=====------
+--I ======-----=====----------------
+--J ======--------------------------
+0 : 10001100000010000000000000000000;
+1 : 10001100000010010000000000000100;
+2 : 00010001000010010000000000000010;
+3 : 00000001000010010100000000100000;
+4 : 10101100000010000000000000001000;
+5 : 00000000000000000000000000000000;
+6 : 00010000000000001111111111111111;
+[7..255] : 00000000000000000000000000000000; 			
+END;

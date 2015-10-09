@@ -1,0 +1,304 @@
+m255
+K3
+13
+cModel Technology
+Z0 d/home/tstapler/CPRE381/lab2/Lab-02
+T_opt
+VF0^;9HC<6^49aEe]Lcc[I2
+04 20 8 work ones_compliment_data dataflow 1
+=1--55f334fb-defaa-509f
+Z1 o-quiet -auto_acc_if_foreign -work work
+n@_opt
+Z2 OL;O;6.5c;42
+T_opt1
+VGoSgf@kMeOolb>JV71@_Z1
+04 2 9 work oc structure 1
+=1--55f3304f-26f12-4256
+R1
+n@_opt1
+R2
+T_opt2
+VPgMG=DL7>SBkfDI<ATl_>1
+04 15 9 work ones_compliment structure 1
+=1--55f33091-e2af6-42ff
+R1
+n@_opt2
+R2
+Eand2
+Z3 w1282148150
+Z4 DPx4 ieee 14 std_logic_1164 0 22 GH1=`jDDBJ=`LM;:Ak`kf2
+Z5 8and2.vhd
+Z6 Fand2.vhd
+l0
+L21
+VfVL4Ze9kLmF^WI1lHIJ^a2
+Z7 OL;C;6.5c;42
+32
+Z8 o-work work
+Z9 tExplicit 1
+!s100 ?nTgX59O`[<]j^L4E@N3<1
+Adataflow
+R4
+DEx4 work 4 and2 0 22 fVL4Ze9kLmF^WI1lHIJ^a2
+l30
+L29
+VLbzWnS]heH@[dZ36T_];E3
+R7
+32
+Z10 Mx1 4 ieee 14 std_logic_1164
+R8
+R9
+!s100 2]QXgT@2`<[OgNlO=gZiS0
+Egenerate_example
+R3
+R4
+Z11 8generate_example.vhd
+Z12 Fgenerate_example.vhd
+l0
+L21
+V2cEz]3Y_^NA<==2C56HGH0
+R7
+32
+R8
+R9
+!s100 L2GLZlH0RJ7a6EQeRc4B42
+Astructure
+R4
+DEx4 work 16 generate_example 0 22 2cEz]3Y_^NA<==2C56HGH0
+l37
+L29
+VSmfgl6eQVS2n4UTF9K4mZ1
+R7
+32
+R10
+R8
+R9
+!s100 KYQi90jlP6`ki0F>=@zH]1
+Einv
+R3
+R4
+Z13 8inv.vhd
+Z14 Finv.vhd
+l0
+L21
+VkSo09h=RWQaSU4AA]H_Wh3
+R7
+32
+R8
+R9
+!s100 I=E9IQAB=_L[eRzf6_J`e1
+Adataflow
+R4
+DEx4 work 3 inv 0 22 kSo09h=RWQaSU4AA]H_Wh3
+l29
+L28
+V7o0al<=MRKSDRTMX_6dTN1
+R7
+32
+R10
+R8
+R9
+!s100 o3LAce^L_K;V0OBiFSgDA0
+Eoc
+Z15 w1442000969
+R4
+Z16 8oc.vhd
+Z17 Foc.vhd
+l0
+L4
+VCIl[o<CCeCi?jllFhNORH2
+R7
+32
+R8
+R9
+!s100 R^cIKDf4[@4N8geAbeWdS2
+Astructure
+R4
+DEx4 work 2 oc 0 22 CIl[o<CCeCi?jllFhNORH2
+l23
+L10
+VX:a9_D=_1d4KgH1jTIbk=1
+R7
+32
+R10
+R8
+R9
+!s100 c>mdj2;8VzT=@Dn4F0iQ@2
+Eones_compliment
+Z18 w1442001298
+R4
+Z19 8/home/tstapler/CPRE381/lab2/P1/ones_compliment.vhd
+Z20 F/home/tstapler/CPRE381/lab2/P1/ones_compliment.vhd
+l0
+L4
+VAW[RBok_:[09bL;_Y<K9O0
+R7
+32
+R8
+R9
+!s100 o4R@@PRz9jJ_Z]HXgVY6R1
+Astructure
+R4
+Z21 DEx4 work 15 ones_compliment 0 22 AW[RBok_:[09bL;_Y<K9O0
+l18
+L11
+VUFUWX2WFDL]^QzebN6AVJ1
+R7
+32
+R10
+R8
+R9
+!s100 @?KlWHlF9Y:@69c@=UM8l1
+Adataflow
+R4
+R21
+l13
+L11
+VDOk>NS>;[>jF0R`9Ub[PW1
+R7
+32
+R10
+R8
+R9
+Z22 F/home/tstapler/CPRE381/lab2/P1/ones_compliment_data.vhd
+w1442001924
+Z23 8/home/tstapler/CPRE381/lab2/P1/ones_compliment_data.vhd
+!s100 ]n5gIoBM?1?3lLCnn@eSV0
+Eones_compliment_data
+Z24 w1442002020
+R4
+R23
+R22
+l0
+L4
+V7<EOT6K>JZ^K_azGXU`eg1
+R7
+32
+R8
+R9
+!s100 0:UAm<9B6Z`n2ln;G9;gC1
+Adataflow
+R4
+DEx4 work 20 ones_compliment_data 0 22 7<EOT6K>JZ^K_azGXU`eg1
+l13
+L11
+VlLW8SDF6W2J[]I^j3bK?T0
+R7
+32
+R10
+R8
+R9
+!s100 >=P]le1W;S^BU]IcXC3AE0
+Eones_compliment_structure
+Z25 w1442004290
+R4
+Z26 8/home/tstapler/CPRE381/lab2/P1/ones_compliment_structure.vhd
+Z27 F/home/tstapler/CPRE381/lab2/P1/ones_compliment_structure.vhd
+l0
+L4
+VGZcHe]57L598n<]1J``GP0
+R7
+32
+R8
+R9
+!s100 LRF9NnTP7_3YMj35ae2R]1
+Astructure
+R4
+DEx4 work 25 ones_compliment_structure 0 22 GZcHe]57L598n<]1J``GP0
+l18
+L11
+VJ=0`dd40o6MW0@J?fG3oT1
+R7
+32
+R10
+R8
+R9
+!s100 8AD>6U6c]MKBI_GA6N`M62
+Eor2
+R3
+R4
+Z28 8or2.vhd
+Z29 For2.vhd
+l0
+L21
+VQ5jj`QMaAZGS77OQ=E:SN3
+R7
+32
+R8
+R9
+!s100 GZnm45]@TOZN;V>CA[0Z12
+Adataflow
+R4
+DEx4 work 3 or2 0 22 Q5jj`QMaAZGS77OQ=E:SN3
+l30
+L29
+V6h9d6BaoaR`kMXR4UCT``3
+R7
+32
+R10
+R8
+R9
+!s100 GLP627^LGVOJ5LHjUXG]k3
+Etb_and2
+R3
+R4
+Z30 8tb_and2.vhd
+Z31 Ftb_and2.vhd
+l0
+L22
+VKiibc_mgGX7IRN1NdFXB;1
+R7
+32
+R8
+R9
+!s100 29Ei1[TSBA[jR:>5V^Tz62
+Abehavior
+R4
+DEx4 work 7 tb_and2 0 22 Kiibc_mgGX7IRN1NdFXB;1
+l38
+L26
+VQA>i_lI=Z1EO;7GeeZbJ?1
+R7
+32
+R10
+R8
+R9
+!s100 FjJNfWHL=nRoUzeh4L3X31
+Etestbed
+w1442005296
+R4
+8/home/tstapler/CPRE381/lab2/P1/test_bench.vhd
+F/home/tstapler/CPRE381/lab2/P1/test_bench.vhd
+l0
+L5
+V>Wd5?SoXodMj8jiUA5Nm82
+!s100 5c=8kk^HWf8=[Q7N7[75W3
+R7
+32
+R8
+R9
+Exor2
+R3
+R4
+Z32 8xor2.vhd
+Z33 Fxor2.vhd
+l0
+L21
+V4<hnMi^zYM6eOWXYf:ikb2
+R7
+32
+R8
+R9
+!s100 [9`N;7:7CbPFFM;HRMKMk3
+Adataflow
+R4
+DEx4 work 4 xor2 0 22 4<hnMi^zYM6eOWXYf:ikb2
+l30
+L29
+VX3OzJB68@En2Z80HjahZC1
+R7
+32
+R10
+R8
+R9
+!s100 :Qh_cIJZ<Mo73LWk82H_R0

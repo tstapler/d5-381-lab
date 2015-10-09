@@ -1,0 +1,459 @@
+m255
+K3
+13
+cModel Technology
+Z0 d/home/tstapler/CPRE381/lab2
+T_opt
+Z1 VgNPf=>^UUM28XobA;WVKR0
+Z2 04 14 9 work nbit_adder_sub structure 1
+Z3 =1--56045210-39f0f-9a7
+Z4 o-quiet -auto_acc_if_foreign -work work
+Z5 n@_opt
+Z6 OL;O;6.5c;42
+T_opt1
+Z7 VD[`h<7KlF<icAF?MEV@?D1
+Z8 04 15 9 work nbit_full_adder structure 1
+Z9 =1--56042b23-3192f-1e79
+R4
+Z10 n@_opt1
+R6
+T_opt2
+Z11 VFzE5067Gdc;F=mIl`RPIU2
+Z12 04 25 8 work n_in_dataflow_multiplexer dataflow 1
+Z13 =1--5604358e-8fb32-3ada
+R4
+Z14 n@_opt2
+R6
+Eand2
+Z15 w1282148150
+Z16 DPx4 ieee 14 std_logic_1164 0 22 GH1=`jDDBJ=`LM;:Ak`kf2
+32
+Z17 8/home/tstapler/CPRE381/lab2/Lab-02/and2.vhd
+Z18 F/home/tstapler/CPRE381/lab2/Lab-02/and2.vhd
+l0
+L21
+Z19 VfVL4Ze9kLmF^WI1lHIJ^a2
+Z20 OL;C;6.5c;42
+Z21 o-work work
+Z22 tExplicit 1
+Z23 !s100 ?nTgX59O`[<]j^L4E@N3<1
+Adataflow
+R16
+Z24 DEx4 work 4 and2 0 22 fVL4Ze9kLmF^WI1lHIJ^a2
+32
+Z25 Mx1 4 ieee 14 std_logic_1164
+l30
+L29
+Z26 VLbzWnS]heH@[dZ36T_];E3
+R20
+R21
+R22
+Z27 !s100 2]QXgT@2`<[OgNlO=gZiS0
+Efull_adder
+Z28 w1442608784
+R16
+Z29 8/home/tstapler/CPRE381/lab2/P1/full_adder.vhdl
+Z30 F/home/tstapler/CPRE381/lab2/P1/full_adder.vhdl
+l0
+L4
+Z31 V2i_OfEjL`gLA3NKf0>l:G1
+R20
+32
+R21
+R22
+Z32 !s100 fYLVY:6Hib0Xl;Pz>:Wd[0
+Astructure
+R16
+Z33 DEx4 work 10 full_adder 0 22 2i_OfEjL`gLA3NKf0>l:G1
+l38
+L13
+Z34 Vzd_ImHI;lz]i_X`E^9?B[0
+R20
+32
+R25
+R21
+R22
+Z35 !s100 lWMbVZ4W42PV`AYaFIPbc3
+Egenerate_example
+R16
+32
+R15
+Z36 8/home/tstapler/CPRE381/lab2/Lab-02/generate_example.vhd
+Z37 F/home/tstapler/CPRE381/lab2/Lab-02/generate_example.vhd
+l0
+L21
+Z38 V2cEz]3Y_^NA<==2C56HGH0
+R20
+R21
+R22
+Z39 !s100 L2GLZlH0RJ7a6EQeRc4B42
+Astructure
+R16
+Z40 DEx4 work 16 generate_example 0 22 2cEz]3Y_^NA<==2C56HGH0
+32
+R25
+l37
+L29
+Z41 VSmfgl6eQVS2n4UTF9K4mZ1
+R20
+R21
+R22
+Z42 !s100 KYQi90jlP6`ki0F>=@zH]1
+Einv
+R15
+R16
+32
+Z43 8/home/tstapler/CPRE381/lab2/Lab-02/inv.vhd
+Z44 F/home/tstapler/CPRE381/lab2/Lab-02/inv.vhd
+l0
+L21
+Z45 VkSo09h=RWQaSU4AA]H_Wh3
+R20
+R21
+R22
+Z46 !s100 I=E9IQAB=_L[eRzf6_J`e1
+Adataflow
+R16
+Z47 DEx4 work 3 inv 0 22 kSo09h=RWQaSU4AA]H_Wh3
+32
+R25
+l29
+L28
+Z48 V7o0al<=MRKSDRTMX_6dTN1
+R20
+R21
+R22
+Z49 !s100 o3LAce^L_K;V0OBiFSgDA0
+En_bit_full_adder_dataf
+Z50 w1443116503
+R16
+Z51 8/home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd
+Z52 F/home/tstapler/CPRE381/lab2/P1/nbit_full_adder_dataflow.vhd
+l0
+L4
+Z53 V@^gP_]Y@;C2ljRVG1i^7k0
+R20
+32
+R21
+R22
+Z54 !s100 IHQLEDhA3jTeR^mW:QU862
+Adataflow
+R16
+Z55 DEx4 work 22 n_bit_full_adder_dataf 0 22 @^gP_]Y@;C2ljRVG1i^7k0
+l19
+L15
+Z56 VQPXZ:O1ERDO25iB9F95EO3
+R20
+32
+R25
+R21
+R22
+Z57 !s100 CUCGnOWk:3[1^?A9jYLdP3
+En_in_dataflow_multiplexer
+Z58 w1443116260
+R16
+R51
+R52
+l0
+L4
+Z59 VRZfUEcGa5Q95jJ0X@3bD_3
+R20
+32
+R21
+R22
+Z60 !s100 J0gIaNTj9c[8H;^Bn[AlX2
+Adataflow
+R16
+Z61 DEx4 work 25 n_in_dataflow_multiplexer 0 22 RZfUEcGa5Q95jJ0X@3bD_3
+l19
+L15
+Z62 V43R`LFG8g>31<CM5M?gF91
+R20
+32
+R25
+R21
+R22
+Z63 !s100 PkTLJ=^NXcm^4`COm]kT[0
+En_in_multiplexer
+R16
+32
+Z64 w1442607350
+Z65 8/home/tstapler/CPRE381/lab2/P1/multiplexer_nbit_structural.vhdl
+Z66 F/home/tstapler/CPRE381/lab2/P1/multiplexer_nbit_structural.vhdl
+l0
+L3
+Z67 VBiha><]0F7AaF@>LMMoJ40
+R20
+R21
+R22
+Z68 !s100 :ASS[HP_2YBGfNi`<E?BP0
+Astructure
+R16
+Z69 DEx4 work 16 n_in_multiplexer 0 22 Biha><]0F7AaF@>LMMoJ40
+32
+R25
+l34
+L10
+Z70 V?UilPF@mY>d8N?Ub[JA5D1
+R20
+R21
+R22
+Z71 !s100 Jg51O1@BPUka^fOf3NZ]Q3
+Enbit_adder_sub
+Z72 w1443123712
+Z73 DPx17 __model_tech/ieee 14 std_logic_1164 0 22 GH1=`jDDBJ=`LM;:Ak`kf2
+32
+Z74 8/home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd
+Z75 F/home/tstapler/CPRE381/lab2/P1/nbit_adder_sub.vhd
+l0
+L4
+Z76 Vf1YVJQFDOaVJmo_DSWUKn1
+R20
+R21
+R22
+Z77 !s100 `ic8Q[2aC96n5ZNk`<[:@3
+Astructure
+Z78 DEx32 /home/tstapler/CPRE381/lab2/work 4 xor2 0 22 4<hnMi^zYM6eOWXYf:ikb2
+Z79 DEx32 /home/tstapler/CPRE381/lab2/work 3 or2 0 22 Q5jj`QMaAZGS77OQ=E:SN3
+Z80 DEx32 /home/tstapler/CPRE381/lab2/work 4 and2 0 22 fVL4Ze9kLmF^WI1lHIJ^a2
+Z81 DEx32 /home/tstapler/CPRE381/lab2/work 10 full_adder 0 22 2i_OfEjL`gLA3NKf0>l:G1
+Z82 DEx32 /home/tstapler/CPRE381/lab2/work 18 two_in_multiplexer 0 22 3=bSzQ=8h=W`ZY71<YOzz3
+Z83 DEx32 /home/tstapler/CPRE381/lab2/work 3 inv 0 22 kSo09h=RWQaSU4AA]H_Wh3
+R73
+Z84 DEx32 /home/tstapler/CPRE381/lab2/work 14 nbit_adder_sub 0 22 f1YVJQFDOaVJmo_DSWUKn1
+32
+Z85 Mx1 17 __model_tech/ieee 14 std_logic_1164
+l43
+L14
+Z86 VR?gdg7=@fhcCWR=?BMXBI0
+R20
+R21
+R22
+Z87 !s100 z6C@0k_S1z`CASM6oiBh`1
+Enbit_full_adder
+R16
+32
+Z88 w1443113716
+Z89 8/home/tstapler/CPRE381/lab2/P1/nbit_full_adder.vhdl
+Z90 F/home/tstapler/CPRE381/lab2/P1/nbit_full_adder.vhdl
+l0
+L4
+Z91 V?:X3ZeToOBoN2QSRXYDF<2
+R20
+R21
+R22
+Z92 !s100 >i@JF2@U6BkOl_6jTlo6W3
+Astructure
+R16
+Z93 DEx4 work 15 nbit_full_adder 0 22 ?:X3ZeToOBoN2QSRXYDF<2
+32
+R25
+l39
+L14
+Z94 VXEM5jBH0dDeQ:L0]L=5ii3
+R20
+R21
+R22
+Z95 !s100 VWaO8F?<14^`HG;?JGJfk2
+Eones_compliment
+R16
+32
+Z96 w1441999778
+Z97 8P1/onescomp.vhd
+Z98 FP1/onescomp.vhd
+l0
+L4
+Z99 VAW[RBok_:[09bL;_Y<K9O0
+R20
+R21
+R22
+Z100 !s100 o4R@@PRz9jJ_Z]HXgVY6R1
+Astructure
+w0
+R16
+Z101 DEx4 work 15 ones_compliment 0 22 AW[RBok_:[09bL;_Y<K9O0
+32
+R25
+l18
+L11
+Z102 V`zacokGQeNlfHOn6DB>]m0
+R20
+R21
+R22
+Z103 !s100 R9XPUnEGe132FN4lTJUE<0
+Eones_compliment_data
+R16
+32
+Z104 w1442002020
+Z105 8/home/tstapler/CPRE381/lab2/P1/ones_compliment_data.vhd
+Z106 F/home/tstapler/CPRE381/lab2/P1/ones_compliment_data.vhd
+l0
+L4
+Z107 V7<EOT6K>JZ^K_azGXU`eg1
+R20
+R21
+R22
+Z108 !s100 0:UAm<9B6Z`n2ln;G9;gC1
+Adataflow
+R16
+Z109 DEx4 work 20 ones_compliment_data 0 22 7<EOT6K>JZ^K_azGXU`eg1
+32
+R25
+l13
+L11
+Z110 VlLW8SDF6W2J[]I^j3bK?T0
+R20
+R21
+R22
+Z111 !s100 >=P]le1W;S^BU]IcXC3AE0
+Eones_compliment_structure
+R16
+32
+Z112 w1442603591
+Z113 8/home/tstapler/CPRE381/lab2/P1/ones_compliment_structure.vhd
+Z114 F/home/tstapler/CPRE381/lab2/P1/ones_compliment_structure.vhd
+l0
+L4
+Z115 VGZcHe]57L598n<]1J``GP0
+R20
+R21
+R22
+Z116 !s100 LRF9NnTP7_3YMj35ae2R]1
+Astructure
+R16
+Z117 DEx4 work 25 ones_compliment_structure 0 22 GZcHe]57L598n<]1J``GP0
+32
+R25
+l18
+L11
+Z118 VJ=0`dd40o6MW0@J?fG3oT1
+R20
+R21
+R22
+Z119 !s100 8AD>6U6c]MKBI_GA6N`M62
+Eor2
+R15
+R16
+32
+Z120 8/home/tstapler/CPRE381/lab2/Lab-02/or2.vhd
+Z121 F/home/tstapler/CPRE381/lab2/Lab-02/or2.vhd
+l0
+L21
+Z122 VQ5jj`QMaAZGS77OQ=E:SN3
+R20
+R21
+R22
+Z123 !s100 GZnm45]@TOZN;V>CA[0Z12
+Adataflow
+R16
+Z124 DEx4 work 3 or2 0 22 Q5jj`QMaAZGS77OQ=E:SN3
+32
+R25
+l30
+L29
+Z125 V6h9d6BaoaR`kMXR4UCT``3
+R20
+R21
+R22
+Z126 !s100 GLP627^LGVOJ5LHjUXG]k3
+Etb_and2
+R16
+32
+R15
+Z127 8/home/tstapler/CPRE381/lab2/Lab-02/tb_and2.vhd
+Z128 F/home/tstapler/CPRE381/lab2/Lab-02/tb_and2.vhd
+l0
+L22
+Z129 VKiibc_mgGX7IRN1NdFXB;1
+R20
+R21
+R22
+Z130 !s100 29Ei1[TSBA[jR:>5V^Tz62
+Abehavior
+R16
+Z131 DEx4 work 7 tb_and2 0 22 Kiibc_mgGX7IRN1NdFXB;1
+32
+R25
+l38
+L26
+Z132 VQA>i_lI=Z1EO;7GeeZbJ?1
+R20
+R21
+R22
+Z133 !s100 FjJNfWHL=nRoUzeh4L3X31
+Etest_bench
+R16
+32
+Z134 w1442603917
+Z135 8/home/tstapler/CPRE381/lab2/P1/test_bench.vhd
+Z136 F/home/tstapler/CPRE381/lab2/P1/test_bench.vhd
+l0
+L5
+Z137 VlUU<HeLhB3TdS4HDP2T3D1
+R20
+R21
+R22
+Z138 !s100 6Ql:9Y37ST1];fB]fL;Lo1
+Abehavior
+R117
+R16
+Z139 DEx4 work 10 test_bench 0 22 lUU<HeLhB3TdS4HDP2T3D1
+32
+R25
+l27
+L9
+Z140 V`SJ[kAZOi`^LSVQ9h;<IZ3
+R20
+R21
+R22
+Z141 !s100 [K=f990O7Ng=KTn_BGNW53
+Etwo_in_multiplexer
+Z142 w1442606559
+R16
+32
+Z143 8/home/tstapler/CPRE381/lab2/P1/multiplexer_structural.vhdl
+Z144 F/home/tstapler/CPRE381/lab2/P1/multiplexer_structural.vhdl
+l0
+L3
+Z145 V3=bSzQ=8h=W`ZY71<YOzz3
+R20
+R21
+R22
+Z146 !s100 Yf<EoNR^Y8PQ7dTTCXSP]1
+Astructure
+R16
+Z147 DEx4 work 18 two_in_multiplexer 0 22 3=bSzQ=8h=W`ZY71<YOzz3
+32
+R25
+l28
+L4
+Z148 VJnTjY7SJHm?YkU09Yo9za2
+R20
+R21
+R22
+Z149 !s100 a=M:EYUWa`ZXk7XS_5_Sg2
+Exor2
+R15
+R16
+32
+Z150 8/home/tstapler/CPRE381/lab2/Lab-02/xor2.vhd
+Z151 F/home/tstapler/CPRE381/lab2/Lab-02/xor2.vhd
+l0
+L21
+Z152 V4<hnMi^zYM6eOWXYf:ikb2
+R20
+R21
+R22
+Z153 !s100 [9`N;7:7CbPFFM;HRMKMk3
+Adataflow
+R16
+Z154 DEx4 work 4 xor2 0 22 4<hnMi^zYM6eOWXYf:ikb2
+32
+R25
+l30
+L29
+Z155 VX3OzJB68@En2Z80HjahZC1
+R20
+R21
+R22
+Z156 !s100 :Qh_cIJZ<Mo73LWk82H_R0

@@ -1,0 +1,186 @@
+# //  ModelSim SE-64 6.5c Aug 27 2009 Linux 2.6.32-504.8.1.el6.x86_64
+# //
+# //  Copyright 1991-2009 Mentor Graphics Corporation
+# //              All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND 
+# //  PROPRIETARY INFORMATION WHICH IS THE PROPERTY
+# //  OF MENTOR GRAPHICS CORPORATION OR ITS LICENSORS
+# //  AND IS SUBJECT TO LICENSE TERMS.
+# //
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab1/Lab-01/Multiplier.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity multiplier
+# -- Compiling architecture behavior of multiplier
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab1/Lab-01/Quadratic.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity quadratic
+# -- Compiling architecture structure of quadratic
+vsim work.quadratic
+# vsim work.quadratic 
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: tstapler  Hostname: co2048-16.ece.iastate.edu  ProcessID: 28641
+#           Attempting to use alternate WLF file "./wlfteuzOSO".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlfteuzOSO
+# ** Note: (vsim-3812) Design is being optimized...
+# Loading std.standard
+# Loading ieee.std_logic_1164(body)
+# Loading work.quadratic(structure)#1
+force -freeze sim:/quadratic/iclk 1 0, 0 {50 ns} -r 100
+force -freeze sim:/quadratic/ix 2 0
+add wave sim:/quadratic/*
+run 100
+run 1000
+force -freeze sim:/quadratic/ix 5 0
+run 400
+quit -sim
+vsim work.quadratic
+# vsim work.quadratic 
+# Loading std.standard
+# Loading ieee.std_logic_1164(body)
+# Loading work.quadratic(structure)#1
+force -freeze sim:/quadratic/iclk 1 0, 0 {50 ns} -r 100
+force -freeze sim:/quadratic/ix 2 0
+run 400
+quit -sim
+vsim work.quadratic
+# vsim work.quadratic 
+# Loading std.standard
+# Loading ieee.std_logic_1164(body)
+# Loading work.quadratic(structure)#1
+add wave \
+{sim:/quadratic/iclk } \
+{sim:/quadratic/ix } \
+{sim:/quadratic/oy } \
+{sim:/quadratic/svalue_ax } \
+{sim:/quadratic/svalue_bx } \
+{sim:/quadratic/svalue_axx } \
+{sim:/quadratic/svalue_bxpc } 
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: tstapler  Hostname: co2048-16.ece.iastate.edu  ProcessID: 28641
+#           Attempting to use alternate WLF file "./wlftEgNnFG".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftEgNnFG
+force -freeze sim:/quadratic/iclk 1 0, 0 {50 ns} -r 100
+force -freeze sim:/quadratic/ix 2 0
+run 100
+run 100
+run 100
+force -freeze sim:/quadratic/ix 5 0
+run 300
+100
+# invalid command name "100"
+run 200
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab1/Lab-01/Quadratic.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity quadratic
+# -- Compiling architecture structure of quadratic
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab1/Lab-01/Multiplier.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity multiplier
+# -- Compiling architecture behavior of multiplier
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab1/Lab-01/Einstein.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# ** Error: /home/tstapler/CPRE381/lab1/Lab-01/Einstein.vhd(1): near "libray": syntax error
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab1/Lab-01/Einstein.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity einstein
+# ** Error: /home/tstapler/CPRE381/lab1/Lab-01/Einstein.vhd(7): near ")": expecting "IDENTIFIER"
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab1/Lab-01/Einstein.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity einstein
+# ** Error: /home/tstapler/CPRquit -sim
+vsim work.quadratic
+# vsim work.quadratic 
+# Loading std.standard
+# Loading ieee.std_logic_1164(body)
+# Loading work.quadratic(structure)#1
+# ** Warning: (vsim-3473) Component instance "g_mult1 : multiplier" is not bound.
+#    Time: 0 ns  Iteration: 0  Region: /quadratic  File: /home/tstapler/CPRE381/lab1/Lab-01/Quadratic.vhd
+# ** Warning: (vsim-3473) Component instance "g_mult2 : multiplier" is not bound.
+#    Time: 0 ns  Iteration: 0  Region: /quadratic  File: /home/tstapler/CPRE381/lab1/Lab-01/Quadratic.vhd
+# ** Warning: (vsim-3473) Component instance "g_mult3 : multiplier" is not bound.
+#    Time: 0 ns  Iteration: 0  Region: /quadratic  File: /home/tstapler/CPRE381/lab1/Lab-01/Quadratic.vhd
+force -freeze sim:/quadratic/iclk 1 0, 0 {50 ns} -r 100
+force -freeze sim:/quadratic/ix 2 0
+add wave \
+{sim:/quadratic/iclk } \
+{sim:/quadratic/ix } \
+{sim:/quadratic/oy } \
+{sim:/quadratic/svalue_ax } \
+{sim:/quadratic/svalue_bx } \
+{sim:/quadratic/svalue_axx } \
+{sim:/quadratic/svalue_bxpc } 
+run 400
+quit -sim
+vcom -reportprogress 300 -work work /home/tstapler/CPRE381/lab1/Lab-01/Adder.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity adder
+# -- Covsim -voptargs=+acc work.quadratic
+# vsim -voptargs=+acc work.quadratic 
+# ** Note: (vsim-3812) Design is being optimized...
+# Loading std.standard
+# Loading ieee.std_logic_1164(body)
+# Loading work.quadratic(structure)#1
+# Loading work.multiplier(behavior)#1
+# Loading work.adder(behavior)#1
+force -freeze sim:/quadratic/iclk 1 0, 0 {50 ns} -r 100
+force -freeze sim:/quadratic/ix 28 0
+noforce sim:/quadratic/ix
+force -freeze sim:/quadratic/ix 2 0
+add wave \
+{sim:/quadratic/iclk } \
+{sim:/quadratic/ix } \
+{sim:/quadratic/oy } \
+{sim:/quadratic/svalue_ax } \
+{sim:/quadratic/svalue_bx } \
+{sim:/quadratic/svalue_axx } \
+{sim:/quadratic/svalue_bxpc } 
+run 400
+force -freeze sim:/quadratic/ix 5 0
+run 400
+PRE381/lab1/Lab-01/Quadratic.vhd
+# Model Technology ModelSim SE-64 vcom 6.5c Compiler 2009.08 Aug 27 2009
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling entity quadratic
+# -- Compiling architecture structure of quadratic
+vsim work.quadratic
+# vsim work.quadratic 
+# Loading std.standard
+# Loading ieee.std_logic_1164(body)
+# Loading work.quadratic(structure)#1
+# ** Warning: (vsim-3473) Component instance "g_mult1 : multiplier" is not bound.
+#    Time: 0 ns  Iteration: 0  Region: /quadratic  File: /home/tstapler/CPRE381/lab1/Lab-01/Quadratic.vhd
+# ** Warning: (vsim-3473) Component instance "g_mult2 : multiplier" is not bound.
+#    Time: 0 ns  Iteration: 0  Region: /quadratic  File: /home/tstapler/CPRE381/lab1/Lab-01/Quadratic.vhd
+# ** Warning: (vsim-3473) Component instance "g_mult3 : multiplier" is not bound.
+#    Time: 0 ns  Iteration: 0  Region: /quadratic  File: /home/tstapler/CPRE381/lab1/Lab-01/Quadratic.vhd
+add wave \
+{sim:/quadratic/iclk } \
+{sim:/quadratic/ix } \
+{sim:/quadratic/oy } \
+{sim:/quadratic/svalue_ax } \
+{sim:/quadratic/svalue_bx } \
+{sim:/quadratic/svalue_axx } \
+{sim:/quadratic/svalue_bxpc } 
+force -freeze sim:/quadratic/iclk 1 0, 0 {50 ns} -r 100
+force -freeze sim:/quadratic/ix 2 0
+run 400
+quit -sim
