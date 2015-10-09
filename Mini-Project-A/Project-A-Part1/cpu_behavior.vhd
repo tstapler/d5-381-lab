@@ -191,11 +191,44 @@ begin
                 ALU_exec_result(rdata1 + rdata2);
                 writeback(rd, ALU_result);
 		NPC := PC_plus_4;
+		
+	      when "101010" =>    --SLT
+		if rs < rt then
+		   rd := 1;
+		else
+		   rd := 0;
+		end if;
+		NPC := PC_plus_4;
+
+	     when "000000" =>  --SLL
+		rd := (rt << shamt);
+		NPC := PC_plus_4;
 
               when others => -- Funct code not supported yet
                 report "Unsupported funct code" severity failure;
             end case;
             -- End of R-type
+	
+	  when "001000" =>    --ADDI
+	    ALU_exec_result(rdata1 + imme);
+            writeback(rd, ALU_result;
+            NPC := PC_plus_4;
+         
+          when "001111"  =>    ---LUI
+            witeback(rt, imme<<16);
+	    NPC :=PC_plus_4;
+
+	  when "001010"  =>  --SLTI
+	    if rs < imme then
+                rt := 1;
+	    else
+	        rt := 0;
+	    end if;
+		NPC := PC_plus_4;
+
+	  when "001101"  => --ORI
+ 	     rt := (rs or imme);
+	     NPC := PC_plus_4;
 
           when "000100" =>   -- BEQ
             ALU_exec_result(rdata1 - rdata2);
@@ -204,7 +237,7 @@ begin
             else
 	      NPC := PC_plus_4;
 	    end if;
-
+	
           when "100011" =>   -- LW
 	    ALU_exec_result(rdata1 + unsigned(resize(imme, 32)));
 	    read_dmem(ALU_result);
