@@ -52,7 +52,7 @@ begin
         variable j_target   : u32_t; 	-- Jump target
 
         -- ALU result and zero signal
-        variable ALU_result : u32_t;
+      IPS Instruction Ref  variable ALU_result : u32_t;
         variable ALU_zero   : boolean;
 
         --
@@ -195,7 +195,7 @@ begin
                       when "101010" =>    --SLT
                           if rs < rt then
                               rd := 1;
-                          else
+                          else262 deletio
                               rd := 0;
                           end if;
                           NPC := PC_plus_4;
@@ -205,7 +205,8 @@ begin
                           NPC := PC_plus_4;
 
                       when "001000" =>  --JR
-                          --TODO
+                          PC := NPC;
+			  NPC := read_reg(regfile, rs);
 
                       when others => -- Funct code not supported yet
                           report "Unsupported funct code" severity failure;
@@ -213,10 +214,14 @@ begin
                     -- End of R-type
 
               when "000010" =>   -- J
-                    --TODO
+              	   PC := NPC;
+		   NPC := (PC and x"f0000000") or (target << 2);
+		    
 
               when "000011" =>   -- JAL
-                    --TODO
+		   writeback(31, (PC + 8 or NPC + 4));
+                   PC := NPC;
+		   NPC := (PC and x"f0000000") or (target << 2);
               
               when "000100" =>   -- BEQ
                   ALU_exec_result(rdata1 - rdata2);
@@ -231,7 +236,7 @@ begin
 
               when "001000" =>    --ADDI
                   ALU_exec_result(rdata1 + imme);
-                  writeback(rd, ALU_result;
+                  writeback(rd, ALU_result);
                   NPC := PC_plus_4;
 
               when "001010"  =>  --SLTI
