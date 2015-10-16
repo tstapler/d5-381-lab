@@ -52,7 +52,7 @@ begin
         variable j_target   : u32_t; 	-- Jump target
 
         -- ALU result and zero signal
-      IPS Instruction Ref  variable ALU_result : u32_t;
+        variable ALU_result : u32_t;
         variable ALU_zero   : boolean;
 
         --
@@ -131,19 +131,19 @@ begin
         report " ------------- CPU0 EXECUTION starts --------------------";
 
         loop
-          -- CPU execution starts with rising clock edge
+            -- CPU execution starts with rising clock edge
             wait on clock;
             if rising_edge(clock) then
-          -- Clean up: Reset data memory read/write signals and register write signal
+                -- Clean up: Reset data memory read/write signals and register write signal
                 clear_reg_write;
                 make_dmem_idle;
 
-          -- Stage 1: Instruction fetch
+                -- Stage 1: Instruction fetch
                 imem_addr <= std_logic_vector(PC);
                 wait for 0.2*CCT;
                 inst_text <= mips2text(inst);
 
-          -- STAGE 2: Instruction decode and register read
+                -- STAGE 2: Instruction decode and register read
                 opcode   := unsigned(inst(31 downto 26));
                 rs       := unsigned(inst(25 downto 21));
                 rt       := unsigned(inst(20 downto 16));
@@ -155,129 +155,130 @@ begin
                 rdata1   := read_reg(regfile, rs);
                 rdata2   := read_reg(regfile, rt);
 
-          -- Calculate PC+4
+                -- Calculate PC+4
                 PC_plus_4 := PC + 4;
 
-          -- Pre-calculate branch and jump target
+                -- Pre-calculate branch and jump target
                 br_target := PC_plus_4 + unsigned(resize(imme*4, 32));
                 j_target  := PC_plus_4(31 downto 28) & unsigned(inst(25 downto 0)) & "00";
 
-          -- Delay for 10ns
+                -- Delay for 10ns
                 wait for 0.1*CCT;
 
-------------------------------------------------------------------------
--- From now, there are three sequential stages, whose operations are
--- decided by the opcode and the funct code.
---   STAGE 3: ALU execution; produce ALU result
---   STAGE 4: Read or write memory (or idle memory)
---   STAGE 5: Write back to register, update PC
--- There is a parallel operation that calculates branch/jump targets.
-------------------------------------------------------------------------
-          
-------------------------------------------------------------------------
--- ADD YOUR CODE TO SUPPORT MORE INSTRUCTIONS (OPCODE/FUNCT)
-------------------------------------------------------------------------
-          
-          case opcode is
-              when "000000" =>		-- R-type instructions
-                                -- Data operation according to funct code
-                  case funct is
-                      when "100000" =>   -- ADD
-                          ALU_exec_result(rdata1 + rdata2);
-                          writeback(rd, ALU_result);
-                          NPC := PC_plus_4;
+          ------------------------------------------------------------------------
+          -- From now, there are three sequential stages, whose operations are
+          -- decided by the opcode and the funct code.
+          --   STAGE 3: ALU execution; produce ALU result
+          --   STAGE 4: Read or write memory (or idle memory)
+          --   STAGE 5: Write back to register, update PC
+          -- There is a parallel operation that calculates branch/jump targets.
+          ------------------------------------------------------------------------
 
-                      when "100001" =>   -- ADDU
-                          ALU_exec_result(rdata1 + rdata2);
-                          writeback(rd, ALU_result);
-                          NPC := PC_plus_4;
+          ------------------------------------------------------------------------
+          -- ADD YOUR CODE TO SUPPORT MORE INSTRUCTIONS (OPCODE/FUNCT)
+          ------------------------------------------------------------------------
 
-                      when "101010" =>    --SLT
-                          if rs < rt then
-                              rd := 1;
-                          else
-                              rd := 0;
-                          end if;
-                          NPC := PC_plus_4;
+                case opcode is
+                    when "000000" =>		-- R-type instructions
+                                      -- Data operation according to funct code
+                        case funct is
+                            when "100000" =>   -- ADD
+                                ALU_exec_result(rdata1 + rdata2);
+                                writeback(rd, ALU_result);
+                                NPC := PC_plus_4;
 
-                      when "000000" =>  --SLL
-                          rd := (rt << shamt);
-                          NPC := PC_plus_4;
+                            when "100001" =>   -- ADDU
+                                ALU_exec_result(rdata1 + rdata2);
+                                writeback(rd, ALU_result);
+                                NPC := PC_plus_4;
 
-                      when "001000" =>  --JR
-                          PC := NPC;
-                          NPC := read_reg(regfile, rs);
+                            when "101010" =>    --SLT
+                                if signed(rdata1) < signed(rdata2) then
+                                    writeback(rd, x"00000001");
+                                else
+                                    writeback(rd, x"00000000");
+                                end if;
+                                NPC := PC_plus_4;
 
-                      when others => -- Funct code not supported yet
-                          report "Unsupported funct code" severity failure;
-                  end case;
-                    -- End of R-type
+                            when "000000" =>  --SLL
+                                writeback(rd, rdata2 sll shamt);
+                                NPC := PC_plus_4;
 
-              when "000010" =>   -- J
-              	   PC := NPC;
-                   NPC := (PC and x"f0000000") or (target << 2);
-		    
+                            when "001000" =>  --JR
+                                PC <= NPC;
+                                NPC := rdata1;
 
-              when "000011" =>   -- JAL
-		   writeback(31, (PC + 8 or NPC + 4));
-                   PC := NPC;
-                   NPC := (PC and x"f0000000") or (target << 2);
-              
-              when "000100" =>   -- BEQ
-                  ALU_exec_result(rdata1 - rdata2);
-                  if ALU_zero then
-                      NPC := br_target;
-                  else
-                      NPC := PC_plus_4;
-                  end if;
+                            when others => -- Funct code not supported yet
+                                report "Unsupported funct code" severity failure;
+                        end case;
+              -- End of R-type
 
-              when "000101" =>   -- BNE
-                  ALU_exec_result(rdata1 - rdata2);
-                  if not ALU_zero then
-                      NPC := PC_plus_4;
-                  else
-                      NPC := br_target;
-                  end if;
-
-              when "001000" =>    --ADDI
-                  ALU_exec_result(rdata1 + imme);
-                  writeback(rd, ALU_result);
-                  NPC := PC_plus_4;
-
-              when "001010"  =>  --SLTI
-                  if rs < imme then
-                      rt := 1;
-                  else
-                      rt := 0;
-                  end if;
-                  NPC := PC_plus_4;
-
-              when "001101"  => --ORI
-                  rt := (rs or imme);
-                  NPC := PC_plus_4;
-
-              when "001111"  =>    --LUI
-                  writeback(rt, imme<<16);
-                  NPC :=PC_plus_4;
+                    when "000010" =>   -- J
+                        PC <= NPC;
+                        NPC := (PC and x"f0000000") or (j_target sll 2);
 
 
-              when "100011" =>   -- LW
-                  ALU_exec_result(rdata1 + unsigned(resize(imme, 32)));
-                  read_dmem(ALU_result);
-                  writeback(rt, unsigned(dmem_rdata));
-                  NPC := PC_plus_4;
+                    when "000011" =>   -- JAL
+                        writeback("11111", (PC + 8 or NPC + 4));
+                        PC <= NPC;
+                        NPC := (PC and x"f0000000") or (j_target sll 2);
 
-              when "101011" =>   -- SW
-                  ALU_exec_result (rdata1 + unsigned(resize(imme, 32)));
-                  write_dmem(ALU_result, rdata2, "1111");
-                  NPC := PC_plus_4;
+                    when "000100" =>   -- BEQ
+                        ALU_exec_result(rdata1 - rdata2);
+                        if ALU_zero then
+                            NPC := br_target;
+                        else
+                            NPC := PC_plus_4;
+                        end if;
 
-              when others => -- Inst not supported yet
-                  report "Unsupported opcode" severity failure;
-                    -- Update PC with NPC
-                  PC <= NPC;
-          end case;
-      end loop;
-  end process;
+                    when "000101" =>   -- BNE
+                        ALU_exec_result(rdata1 - rdata2);
+                        if not ALU_zero then
+                            NPC := PC_plus_4;
+                        else
+                            NPC := br_target;
+                        end if;
+
+                    when "001000" =>    --ADDI
+                        ALU_exec_result(unsigned(signed(rdata1) + signed(imme)));
+                        writeback(rd, ALU_result);
+                        NPC := PC_plus_4;
+
+                    when "001010"  =>  --SLTI
+                        if signed(rdata1) < (imme) then
+                            writeback(rt, x"00000001");
+                        else
+                            writeback(rt, x"00000000");
+                        end if;
+                        NPC := PC_plus_4;
+
+                    when "001101"  => --ORI
+                        writeback(rt, unsigned(signed(rdata1) or resize(imme, 32)));
+                        NPC := PC_plus_4;
+
+                    when "001111"  =>    --LUI
+                        writeback(rt, imme sll 16);
+                        NPC := PC_plus_4;
+
+
+                    when "100011" =>   -- LW
+                        ALU_exec_result(rdata1 + unsigned(resize(imme, 32)));
+                        read_dmem(ALU_result);
+                        writeback(rt, unsigned(dmem_rdata));
+                        NPC := PC_plus_4;
+
+                    when "101011" =>   -- SW
+                        ALU_exec_result (rdata1 + unsigned(resize(imme, 32)));
+                        write_dmem(ALU_result, rdata2, "1111");
+                        NPC := PC_plus_4;
+
+                    when others => -- Inst not supported yet
+                        report "Unsupported opcode" severity failure;
+                  -- Update PC with NPC
+                        PC <= NPC;
+                end case;
+            end if;
+        end loop;
+    end process;
 end behavioral;
 
