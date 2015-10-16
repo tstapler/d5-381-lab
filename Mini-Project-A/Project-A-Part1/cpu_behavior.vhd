@@ -227,7 +227,12 @@ begin
                   end if;
 
               when "000101" =>   -- BNE
-                  --TODO
+                  ALU_exec_result(rdata1 - rdata2);
+                  if not ALU_zero then
+                      NPC := PC_plus_4;
+                  else
+                      NPC := br_target;
+                  end if;
 
               when "001000" =>    --ADDI
                   ALU_exec_result(rdata1 + imme);
