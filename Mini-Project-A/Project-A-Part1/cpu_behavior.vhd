@@ -195,7 +195,7 @@ begin
                       when "101010" =>    --SLT
                           if rs < rt then
                               rd := 1;
-                          else262 deletio
+                          else
                               rd := 0;
                           end if;
                           NPC := PC_plus_4;
@@ -206,7 +206,7 @@ begin
 
                       when "001000" =>  --JR
                           PC := NPC;
-			  NPC := read_reg(regfile, rs);
+                          NPC := read_reg(regfile, rs);
 
                       when others => -- Funct code not supported yet
                           report "Unsupported funct code" severity failure;
@@ -215,13 +215,13 @@ begin
 
               when "000010" =>   -- J
               	   PC := NPC;
-		   NPC := (PC and x"f0000000") or (target << 2);
+                   NPC := (PC and x"f0000000") or (target << 2);
 		    
 
               when "000011" =>   -- JAL
 		   writeback(31, (PC + 8 or NPC + 4));
                    PC := NPC;
-		   NPC := (PC and x"f0000000") or (target << 2);
+                   NPC := (PC and x"f0000000") or (target << 2);
               
               when "000100" =>   -- BEQ
                   ALU_exec_result(rdata1 - rdata2);
