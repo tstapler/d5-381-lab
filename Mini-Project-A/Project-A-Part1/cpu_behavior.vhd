@@ -193,7 +193,7 @@ begin
                                 NPC := PC_plus_4;
 
                             when "101010" =>    --SLT
-                                if signed(rdata1) < signed(rdata2) then
+                                if to_integer(signed(rdata1)) < to_integer(signed(rdata2)) then
                                     writeback(rd, x"00000001");
                                 else
                                     writeback(rd, x"00000000");
@@ -201,11 +201,10 @@ begin
                                 NPC := PC_plus_4;
 
                             when "000000" =>  --SLL
-                                writeback(rd, rdata2 sll shamt);
+                                writeback(rd, rdata2 sll to_integer(shamt));
                                 NPC := PC_plus_4;
 
                             when "001000" =>  --JR
-                                PC <= NPC;
                                 NPC := rdata1;
 
                             when others => -- Funct code not supported yet
@@ -214,17 +213,15 @@ begin
               -- End of R-type
 
                     when "000010" =>   -- J
-                        PC <= NPC;
-                        NPC := (PC and x"f0000000") or (j_target sll 2);
+                        NPC := j_target;
 
 
                     when "000011" =>   -- JAL
-                        writeback("11111", (PC + 8 or NPC + 4));
-                        PC <= NPC;
-                        NPC := (PC and x"f0000000") or (j_target sll 2);
+                        writeback("11111", (PC + 4));
+                        NPC := j_target;
 
                     when "000100" =>   -- BEQ
-                        ALU_exec_result(rdata1 - rdata2);
+                        ALU_exec_result(unsigned(signed(rdata1) - signed(rdata2)));
                         if ALU_zero then
                             NPC := br_target;
                         else
@@ -232,8 +229,8 @@ begin
                         end if;
 
                     when "000101" =>   -- BNE
-                        ALU_exec_result(rdata1 - rdata2);
-                        if not ALU_zero then
+                        ALU_exec_result(unsigned(signed(rdata1) - signed(rdata2)));
+                        if ALU_zero then
                             NPC := PC_plus_4;
                         else
                             NPC := br_target;
@@ -241,11 +238,11 @@ begin
 
                     when "001000" =>    --ADDI
                         ALU_exec_result(unsigned(signed(rdata1) + signed(imme)));
-                        writeback(rd, ALU_result);
+                        writeback(rt, ALU_result);
                         NPC := PC_plus_4;
 
                     when "001010"  =>  --SLTI
-                        if signed(rdata1) < (imme) then
+                        if to_integer(signed(rdata1)) < to_integer(imme) then
                             writeback(rt, x"00000001");
                         else
                             writeback(rt, x"00000000");
@@ -257,7 +254,7 @@ begin
                         NPC := PC_plus_4;
 
                     when "001111"  =>    --LUI
-                        writeback(rt, imme sll 16);
+                        writeback(rt, unsigned(imme & "0000000000000000"));
                         NPC := PC_plus_4;
 
 
@@ -274,11 +271,10 @@ begin
 
                     when others => -- Inst not supported yet
                         report "Unsupported opcode" severity failure;
-                  -- Update PC with NPC
-                        PC <= NPC;
                 end case;
+          -- Update PC with NPC
+                PC <= NPC;
             end if;
         end loop;
     end process;
 end behavioral;
-

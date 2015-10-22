@@ -56,7 +56,8 @@ architecture behavior of tb_cpu0 is
 begin
   -- The instruction memory. Note that it is a read-write memory with write disabled.
   imem0 : mem
-    generic map (mif_filename => "imem-sample.txt")
+    generic map (mif_filename =>
+        "/home/tstapler/CPRE381/Mini-Project-A/Project-A-Part1/imem.txt")
     port map (
       address => c0.imem_addr(9 downto 2), 
       byteena => b"0000", 	-- Instruction is not to be written
@@ -71,7 +72,7 @@ begin
   -- so we also need to invert the clock.
   mem_clock <= transport not clock after 0.8*CCT;
   dmem0 : mem
-    generic map (mif_filename => "dmem-sample.txt")
+    generic map (mif_filename => "/home/tstapler/CPRE381/Mini-Project-A/Project-A-Part1/dmem-sample.txt")
     port map (
       address => c0.dmem_addr(9 downto 2), 
       byteena => c0.dmem_wmask, 

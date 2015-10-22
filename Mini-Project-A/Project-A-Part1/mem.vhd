@@ -23,7 +23,7 @@ use std.textio.all;
 
 entity mem is
 	generic(depth_exp_of_2 	: integer := 10;
-      mif_filename 	: string := "mem.mif");
+      mif_filename 	: string := "/home/tstapler/CPRE381/Mini-Project-A/Project-A-Part1/mem.mif");
 	port   (address	: IN STD_LOGIC_VECTOR (depth_exp_of_2-1 DOWNTO 0) := (OTHERS => '0');
                 byteena : IN STD_LOGIC_VECTOR (3 DOWNTO 0) := (OTHERS => '1');
 		clock	: IN STD_LOGIC := '1';
