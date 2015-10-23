@@ -170,7 +170,7 @@ begin
   ADD_PC_4: adder
     port map ( src1 => PC,
                src2 => x"0004",
-               result => pc_plus_4)
+               result => pc_plus_4);
 
     --Fetch the first instruction
 
