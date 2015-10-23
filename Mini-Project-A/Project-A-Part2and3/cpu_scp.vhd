@@ -109,26 +109,47 @@ architecture scp of cpu is
 
   -- Instruction fields and derives
   signal opcode     : m32_6bits;	-- 6-bit opcode
+  signal rs         : m32_5bits;
+  signal rt         : m32_5bits;
+  signal rd         : m32_5bits;
+  signal shamt      : m32_5bits;
+  signal funct      : m32_6bits;
+  signal imme       : m32_16bits; -- Immediate is signed type
   -- MORE SIGNALS
   
   -- Control signals
+  signal regdst     : m32_1bit;
+  signal jump_ctrl  : m32 1bit;
+  signal branch     : m32 1bit;
+  signal memread    : m32 1bit;
+  signal mem2reg    : m32 1bit;
   signal aluop      : m32_3bits;	-- ALU Op (extended to 3-bit)
-  -- MORE SIGNALS
+  signal memwrite   : m32 1bit;
+  signal alusrc     : m32 1bit;
+  signal regwrite   : m32 1bit;
 
   -- Control signals from ALU Ctrl
   signal jr	    : m32_1bit;		-- Is it JR?
   signal use_shamt  : m32_1bit;		-- Is it a shift instruction using shamt?
+  signal alu_control_in : m32_3bits;
+  -- MORE SIGNALS
 
   -- Signals connected to the data ports of the regfile
-  signal rdata1     : m32_word;		-- Register read data 1
-  -- MORE SIGNALS
+  signal rdata1     : m32_word;  -- Register read data 1
+  signal rdata2     : m32_word;  -- Register read data 2
+  signal write_reg  : m32_5bits;
+  signal write_data : m32_5bits;
   
   -- Signals connected to the ALU
   signal alu_input1 : m32_word;		-- The first input of ALU
+  signal alu_input2 : m32_word;
+  signal alu_result : m32_word;
   -- MORE SIGNALS
   
   -- Other signals
   signal dst        : m32_5bits;	-- The output from the mux for Write Register
+  signal mux_to_alu : m32_word;
+  signal pc_plus_4  : m32_word;
   -- MORE SIGNALS
 
 begin
@@ -144,6 +165,15 @@ begin
       PC    => PC,
       WE    => '1',	-- Update every clock
       clock => clock);
+
+  -- Calculate PC + 4
+  ADD_PC_4: adder
+    port map ( src1 => PC,
+               src2 => x"0004",
+               result => pc_plus_4)
+
+    --Fetch the first instruction
+
 
   -- MORE CODE 
 
