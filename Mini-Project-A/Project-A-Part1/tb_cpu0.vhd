@@ -72,7 +72,7 @@ begin
   -- so we also need to invert the clock.
   mem_clock <= transport not clock after 0.8*CCT;
   dmem0 : mem
-    generic map (mif_filename => "/home/tstapler/CPRE381/Mini-Project-A/Project-A-Part1/dmem-sample.txt")
+    generic map (mif_filename => "/home/tstapler/CPRE381/Mini-Project-A/Project-A-Part1/dmem.txt")
     port map (
       address => c0.dmem_addr(9 downto 2), 
       byteena => c0.dmem_wmask, 

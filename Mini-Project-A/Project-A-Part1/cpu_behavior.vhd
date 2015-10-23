@@ -193,7 +193,8 @@ begin
                                 NPC := PC_plus_4;
 
                             when "101010" =>    --SLT
-                                if to_integer(signed(rdata1)) < to_integer(signed(rdata2)) then
+                                -- if to_integer(signed(rdata1)) < to_integer(signed(rdata2)) then -- KIM
+                                if signed(rdata1) < signed(rdata2) then
                                     writeback(rd, x"00000001");
                                 else
                                     writeback(rd, x"00000000");
@@ -217,7 +218,8 @@ begin
 
 
                     when "000011" =>   -- JAL
-                        writeback("11111", (PC + 4));
+                        -- writeback("11111", (PC + 4)); -- KIM
+                        writeback("11111", PC_plus_4);
                         NPC := j_target;
 
                     when "000100" =>   -- BEQ
@@ -237,12 +239,14 @@ begin
                         end if;
 
                     when "001000" =>    --ADDI
-                        ALU_exec_result(unsigned(signed(rdata1) + signed(imme)));
+                        -- ALU_exec_result(unsigned(signed(rdata1) + signed(imme))); KIM
+                        ALU_exec_result(unsigned(signed(rdata1) + resize(imme, 32)));
                         writeback(rt, ALU_result);
                         NPC := PC_plus_4;
 
                     when "001010"  =>  --SLTI
-                        if to_integer(signed(rdata1)) < to_integer(imme) then
+                        -- if to_integer(signed(rdata1)) < to_integer(imme) then KIM
+                        if signed(rdata1) < resize(imme, 32) then
                             writeback(rt, x"00000001");
                         else
                             writeback(rt, x"00000000");
@@ -250,7 +254,8 @@ begin
                         NPC := PC_plus_4;
 
                     when "001101"  => --ORI
-                        writeback(rt, unsigned(signed(rdata1) or resize(imme, 32)));
+                        -- writeback(rt, unsigned(signed(rdata1) or resize(imme, 32))); KIM
+                        writeback(rt, unsigned(signed(rdata1) or signed(x"0000" & imme) ));
                         NPC := PC_plus_4;
 
                     when "001111"  =>    --LUI
