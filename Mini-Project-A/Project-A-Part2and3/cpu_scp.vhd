@@ -120,7 +120,7 @@ architecture scp of cpu is
   -- Control signals
   signal regdst     : m32_1bit;
   signal jump       : m32 1bit;
-  signal branch     : m32 1bit;
+  signal branch     : m32 2bit;
   signal memread    : m32 1bit;
   signal mem2reg    : m32 1bit;
   signal aluop      : m32_3bits;	-- ALU Op (extended to 3-bit)
@@ -147,7 +147,10 @@ architecture scp of cpu is
   signal alu_result : m32_word;
   signal alu_zero   : m32_word;
   -- MORE SIGNALS
-  
+
+  -- Signals connected to Dmem
+  signal dmem_data : m32_word;
+
   -- Other signals
   signal dst        : m32_5bits;	-- The output from the mux for Write Register
   signal mux_to_alu : m32_word;
@@ -255,8 +258,8 @@ begin
     ALU_MUX_1 : mux2to1
     port map(
         input0 => rdata1,
-        input1 => ,--Extended shamt
-        sel    => ,--??????
+        input1 => ,--??? Extended shamt, assuming we have to implement
+        sel    => ,--???
         output => alu_input_1);
 
   -- ALU_SRC mux for the 2nd ALU input
@@ -294,15 +297,31 @@ begin
 
   -- Connect alu_result and rdata2 to memory address and data inputs
   -- CODE DELETED
+        --??? Not sure what to do with accessing memory
 
   -- The MUX choosing the sequentially next PC and the branch target
-  -- CODE DELETED
+    PC_MUX : pc_mux 
+    port map(
+        PC_plus_4 <= pc_plus_4,
+        br_target <= br_target,
+        j_target  <= j_target,
+        jr_target <= ,--??? have to implement?
+        branch    <= branch,
+        jump      <= jump,
+        jr        <= jr,
+        ALU_zero  <= alu_zero,
+        NPC       <= NPC);
 
   --------------------------------------------------------------
   -- STAGE 5 Write back to register file
   --------------------------------------------------------------
 
-  -- CODE DELETED
+    MEM_MUX : mux2to1
+    port map(
+        input0  <= dmem_data, --???
+        input1  <= alu_result,
+        sel     <= memtoreg,
+        result  <= write_data);
 
   -- CODE DELETED
 
