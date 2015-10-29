@@ -87,10 +87,10 @@ architecture scp of cpu is
     port (PC_plus_4 : in  m32_word;	-- PC plus 4
           br_target : in  m32_word;	-- Branch target
           j_target  : in  m32_word;	-- Jump target
-	  jr_target : in  m32_word;	-- jr target
+          jr_target : in  m32_word;	-- jr target
           branch    : in  m32_2bits;	-- Is it a branch?
           jump      : in  m32_1bit;	-- Is it a jump?
-	  jr        : in  m32_1bit;	-- Is it a jr?
+          jr        : in  m32_1bit;	-- Is it a jr?
           ALU_zero  : in  m32_1bit;	-- ALU result is zero?
           NPC       : out m32_word);	-- Next PC
   end component;
@@ -119,7 +119,7 @@ architecture scp of cpu is
   
   -- Control signals
   signal regdst     : m32_1bit;
-  signal jump_ctrl  : m32 1bit;
+  signal jump       : m32 1bit;
   signal branch     : m32 1bit;
   signal memread    : m32 1bit;
   signal mem2reg    : m32 1bit;
@@ -127,11 +127,12 @@ architecture scp of cpu is
   signal memwrite   : m32 1bit;
   signal alusrc     : m32 1bit;
   signal regwrite   : m32 1bit;
+  signal link       : m32 1bit;
 
   -- Control signals from ALU Ctrl
   signal jr	    : m32_1bit;		-- Is it JR?
   signal use_shamt  : m32_1bit;		-- Is it a shift instruction using shamt?
-  signal alu_control_in : m32_3bits;
+  signal alu_code : m32_4bits;
   -- MORE SIGNALS
 
   -- Signals connected to the data ports of the regfile
@@ -167,15 +168,14 @@ begin
       clock => clock);
 
   -- Calculate PC + 4
-  ADD_PC_4: adder
+  CALC_PC_PLUS_4: adder
     port map ( src1 => PC,
                src2 => x"0004",
                result => pc_plus_4);
 
     --Fetch the first instruction
 
-
-  -- MORE CODE 
+    --Store the instruction address in Imem
 
   -- Debugging: Convert instruction from binary to text
   inst_text <= mips2text(inst);
@@ -191,21 +191,59 @@ begin
   begin
     opcode   <= inst(31 downto 26);
     rs       <= inst(25 downto 21);
-    -- MORE CODE
+    rt       <= inst(20 downto 16);
+    rd       <= inst(15 downto 11);
+    shamt    <= inst(10 downto 6);
+    funct    <= inst(5  downto 0);
+    imme     <= inst(15 downto 0);		-- Immediate is signed type
   end block;
 
   -- The derives from the instruction
   ext_imme   <= (31 downto 16 => imme(15)) & imme;	-- Sign extension of immediate
-  -- MORE CODE
+  jump_addr  <= (PC_plus_4(31 downto 28) & (inst(25 downto 0)) & "00";)
 
   -- Control Unit, decode the op-code
-  -- CODE DELETED
+    CTRL : control
+    port map(
+      opcode =>  inst(31 downto 26)
+      alusrc     => alusrc,
+      aluop      => aluop,	-- ALU Op (extended to 3-bit)
+      branch     => branch,
+      memwrite   => memwrite,
+      memread    => memread,
+      regwrite   => regwrite,
+      regdst     => regdst,
+      mem2reg    => mem2reg,
+      link       => link,
+      branch     => branch,
+      jump       => jump);
 
   -- ALU Control unit, decode the funct code
-  -- CODE DELETED
+    ALU_CONTROL : alu_ctrl
+    port map(
+        aluop       => aluop,  	-- ALUOp from the main control
+        funct       => funct,  -- The funct field
+        alu_code    => alu_code,  -- ALU operation code
+        jr          => jr,   -- Is it JR inst?
+        use_shamt   => use_shamt,  -- Is it a Shift instruction that use shamt?
+
+    REG_MUX : mux2to1
+    port map(
+        input0 => rt,
+        input1 => rd,
+        sel    => regdst,
+        output => write_reg);
 
   -- The register file
-  -- CODE DELETED
+    REGS : regfile
+    port map(
+        src1 => rs,
+        src2 => rt,
+        dst  => write_reg,
+        rdata1 => rdata1,
+        rdata2 => rtata2,
+        WE     => regwrite,
+        clock  => clock);
 
   --------------------------------------------------------------
   -- STAGE 3 ALU execute
