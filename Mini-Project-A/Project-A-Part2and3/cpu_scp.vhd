@@ -145,6 +145,7 @@ architecture scp of cpu is
   signal alu_input1 : m32_word;		-- The first input of ALU
   signal alu_input2 : m32_word;
   signal alu_result : m32_word;
+  signal alu_zero   : m32_word;
   -- MORE SIGNALS
   
   -- Other signals
@@ -200,7 +201,7 @@ begin
 
   -- The derives from the instruction
   ext_imme   <= (31 downto 16 => imme(15)) & imme;	-- Sign extension of immediate
-  jump_addr  <= (PC_plus_4(31 downto 28) & (inst(25 downto 0)) & "00";)
+  jump_addr  <= (pc_plus_4(31 downto 28) & (inst(25 downto 0)) & "00";)
 
   -- Control Unit, decode the op-code
     CTRL : control
@@ -250,20 +251,41 @@ begin
   -- For PC: Calculate branch target and form jump target
   --------------------------------------------------------------
 
-  -- ALU_SRC max for the 1st ALU input, selecting rdata1 or extended shamt
-  -- CODE DELETED
-  
+  -- ALU_SRC mux for the 1st ALU input, selecting rdata1 or extended shamt
+    ALU_MUX_1 : mux2to1
+    port map(
+        input0 => rdata1,
+        input1 => ,--Extended shamt
+        sel    => ,--??????
+        output => alu_input_1);
+
   -- ALU_SRC mux for the 2nd ALU input
-  -- CODE DELETED
+    ALU_MUX_2 : mux2to1
+    port map(
+        input0 => rdata2,
+        input1 => ext_imme,
+        sel    => alusrc,
+        output => alu_input_2);
 
   -- The ALU
-  -- CODE DELETED
+    ALU1 : ALU
+    port map(
+        data1 => alu_input_1,
+        data2 => alu_input_2,
+        alu_code => alu_code,
+        result => alu_result,
+        zero   => alu_zero);
 
   -- The shifter connected to the branch target adder
   br_offset <= ext_imme (29 downto 0) & "00";
 
   -- The branch targer adder
-  -- CODE DELETED
+   CALC_BRANCH_TARGET : adder
+   port map(
+        src1 <= pc_plus_4,
+        src2 <= br_offset,
+        result <= br_target,
+           )
 
   ------------------------------------------------------------------------
   -- STAGE 4 Data memory access
