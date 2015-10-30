@@ -114,20 +114,20 @@ architecture scp of cpu is
   signal rd         : m32_5bits;
   signal shamt      : m32_5bits;
   signal funct      : m32_6bits;
-  signal imme       : m32_16bits; -- Immediate is signed type
+  signal imme       : m32_halfword; -- Immediate is signed type
   -- MORE SIGNALS
   
   -- Control signals
   signal regdst     : m32_1bit;
-  signal jump       : m32 1bit;
-  signal branch     : m32 2bit;
-  signal memread    : m32 1bit;
-  signal mem2reg    : m32 1bit;
+  signal jump       : m32_1bit;
+  signal branch     : m32_2bits;
+  signal memread    : m32_1bit;
+  signal memtoreg   : m32_1bit;
   signal aluop      : m32_3bits;	-- ALU Op (extended to 3-bit)
-  signal memwrite   : m32 1bit;
-  signal alusrc     : m32 1bit;
-  signal regwrite   : m32 1bit;
-  signal link       : m32 1bit;
+  signal memwrite   : m32_1bit;
+  signal alusrc     : m32_2bits;
+  signal regwrite   : m32_1bit;
+  signal link       : m32_1bit;
 
   -- Control signals from ALU Ctrl
   signal jr	    : m32_1bit;		-- Is it JR?
@@ -142,20 +142,26 @@ architecture scp of cpu is
   signal write_data : m32_5bits;
   
   -- Signals connected to the ALU
-  signal alu_input1 : m32_word;		-- The first input of ALU
-  signal alu_input2 : m32_word;
+  signal alu_input_1 : m32_word;		-- The first input of ALU
+  signal alu_input_2 : m32_word;
   signal alu_result : m32_word;
-  signal alu_zero   : m32_word;
+  signal alu_zero   : m32_1bit;
+  signal ext_imme   : m32_word;
   -- MORE SIGNALS
 
   -- Signals connected to Dmem
   signal dmem_data : m32_word;
+  signal wdata     : m32_word;
 
   -- Other signals
   signal dst        : m32_5bits;	-- The output from the mux for Write Register
   signal mux_to_alu : m32_word;
-  signal pc_plus_4  : m32_word;
+  signal br_offset  : m32_word;
+
   -- MORE SIGNALS
+  signal fake1 : m32_word;
+  signal fake2 : m32_1bit;
+  signal fake3 : m32_word;
 
 begin
   --------------------------------------------
@@ -174,12 +180,10 @@ begin
   -- Calculate PC + 4
   CALC_PC_PLUS_4: adder
     port map ( src1 => PC,
-               src2 => x"0004",
-               result => pc_plus_4);
+               src2 => x"00000004",
+               result => PC_plus_4);
 
-    --Fetch the first instruction
-
-    --Store the instruction address in Imem
+  imem_addr <= PC; --???
 
   -- Debugging: Convert instruction from binary to text
   inst_text <= mips2text(inst);
@@ -204,20 +208,19 @@ begin
 
   -- The derives from the instruction
   ext_imme   <= (31 downto 16 => imme(15)) & imme;	-- Sign extension of immediate
-  jump_addr  <= (pc_plus_4(31 downto 28) & (inst(25 downto 0)) & "00";)
+  j_target   <= (PC_plus_4(31 downto 28) & (inst(25 downto 0)) & "00");
 
   -- Control Unit, decode the op-code
     CTRL : control
     port map(
-      opcode =>  inst(31 downto 26)
+      opcode     =>  inst(31 downto 26),
       alusrc     => alusrc,
       aluop      => aluop,	-- ALU Op (extended to 3-bit)
-      branch     => branch,
       memwrite   => memwrite,
       memread    => memread,
       regwrite   => regwrite,
       regdst     => regdst,
-      mem2reg    => mem2reg,
+      memtoreg   => memtoreg,
       link       => link,
       branch     => branch,
       jump       => jump);
@@ -229,7 +232,7 @@ begin
         funct       => funct,  -- The funct field
         alu_code    => alu_code,  -- ALU operation code
         jr          => jr,   -- Is it JR inst?
-        use_shamt   => use_shamt,  -- Is it a Shift instruction that use shamt?
+        use_shamt   => use_shamt);  -- Is it a Shift instruction that use shamt?
 
     REG_MUX : mux2to1
     port map(
@@ -241,11 +244,12 @@ begin
   -- The register file
     REGS : regfile
     port map(
-        src1 => rs,
-        src2 => rt,
-        dst  => write_reg,
+        src1   => rs,
+        src2   => rt,
+        dst    => write_reg,
+        wdata  => wdata,
         rdata1 => rdata1,
-        rdata2 => rtata2,
+        rdata2 => rdata2,
         WE     => regwrite,
         clock  => clock);
 
@@ -258,8 +262,8 @@ begin
     ALU_MUX_1 : mux2to1
     port map(
         input0 => rdata1,
-        input1 => ,--??? Extended shamt, assuming we have to implement
-        sel    => ,--???
+        input1 => fake1,--??? Extended shamt, assuming we have to implement
+        sel    => '0',--???
         output => alu_input_1);
 
   -- ALU_SRC mux for the 2nd ALU input
@@ -267,7 +271,7 @@ begin
     port map(
         input0 => rdata2,
         input1 => ext_imme,
-        sel    => alusrc,
+        sel    => alusrc(0), --??? What bit?
         output => alu_input_2);
 
   -- The ALU
@@ -285,10 +289,9 @@ begin
   -- The branch targer adder
    CALC_BRANCH_TARGET : adder
    port map(
-        src1 <= pc_plus_4,
-        src2 <= br_offset,
-        result <= br_target,
-           )
+        src1   => PC_plus_4,
+        src2   => br_offset,
+        result => br_target);
 
   ------------------------------------------------------------------------
   -- STAGE 4 Data memory access
@@ -296,21 +299,28 @@ begin
   ------------------------------------------------------------------------
 
   -- Connect alu_result and rdata2 to memory address and data inputs
-  -- CODE DELETED
+
+    dmem_addr  <= alu_result;
+
+    dmem_wdata <= rdata2;
+
+
+
+
         --??? Not sure what to do with accessing memory
 
   -- The MUX choosing the sequentially next PC and the branch target
-    PC_MUX : pc_mux 
+    PC_MUX1 : pc_mux 
     port map(
-        PC_plus_4 <= pc_plus_4,
-        br_target <= br_target,
-        j_target  <= j_target,
-        jr_target <= ,--??? have to implement?
-        branch    <= branch,
-        jump      <= jump,
-        jr        <= jr,
-        ALU_zero  <= alu_zero,
-        NPC       <= NPC);
+        PC_plus_4 => PC_plus_4,
+        br_target => br_target,
+        j_target  => j_target,
+        jr_target => fake3,--??? have to implement?
+        branch    => branch,
+        jump      => jump,
+        jr        => jr,
+        ALU_zero  => alu_zero,
+        NPC       => NPC);
 
   --------------------------------------------------------------
   -- STAGE 5 Write back to register file
@@ -318,12 +328,10 @@ begin
 
     MEM_MUX : mux2to1
     port map(
-        input0  <= dmem_data, --???
-        input1  <= alu_result,
-        sel     <= memtoreg,
-        result  <= write_data);
-
-  -- CODE DELETED
+        input0  => dmem_rdata, --???
+        input1  => alu_result,
+        sel     => memtoreg,
+        output  => wdata);
 
   -- Copy register write info for debuging
   reg_write  <= regwrite;
