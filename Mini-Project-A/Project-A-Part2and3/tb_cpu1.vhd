@@ -88,7 +88,7 @@ begin
 
   -- The instruction memory. Note that it is a read-write memory with write disabled.
   imem0 : mem
-    generic map (mif_filename => "imem.txt")
+    generic map (mif_filename => "E:\Documents\d5-381-lab\Mini-Project-A\Project-A-Part1\imem.txt")
     port map (
       address => c0.imem_addr(9 downto 2), 
       byteena => "0000", 
@@ -100,7 +100,7 @@ begin
 
   -- The data memory, with a fixed latency in meory read
   dmem0 : mem
-    generic map (mif_filename => "dmem.txt")
+    generic map (mif_filename => "E:\Documents\d5-381-lab\Mini-Project-A\Project-A-Part1\dmem.txt")
     port map (
       address => c0.dmem_addr(9 downto 2), 
       byteena => c0.dmem_wmask, 
@@ -133,7 +133,7 @@ begin
   -- The instruction memory. Note that it is a read-write memory with write disabled.
   -- There is a fixed latency.
   imem1 : mem
-    generic map (mif_filename => "imem.txt")
+    generic map (mif_filename => "E:\Documents\d5-381-lab\Mini-Project-A\Project-A-Part1\imem.txt")
     port map (
       address => c1.imem_addr(9 downto 2), 
       byteena => "0000", 
@@ -145,7 +145,7 @@ begin
 
   -- The data memory, with a fixed latency in meory read
   dmem1 : mem
-    generic map (mif_filename => "dmem.txt")
+    generic map (mif_filename => "E:\Documents\d5-381-lab\Mini-Project-A\Project-A-Part1\dmem.txt")
     port map (
       address => c1.dmem_addr(9 downto 2), 
       byteena => c0.dmem_wmask, 

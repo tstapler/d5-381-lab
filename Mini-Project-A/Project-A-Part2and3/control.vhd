@@ -51,16 +51,23 @@ architecture rom of control is
   --   10: bne
 
   -- The ROM content
-  -- Format: alusrc(2) aluop(2) & memread memwrite & regwrite regdst memtoreg link & branch(2) jump
+  -- Format: alusrc(2) aluop(3) & memread memwrite & regwrite regdst memtoreg link & branch(2) jump
   -- In the following code, "-" represents "doesn't care".
   signal rom : rom_t := (
     ------------------------------------------------------------
     -- ADD YOUR NEW OPCODES, SEE THE GREENSHEET OF THE TEXTBOOK 
     ------------------------------------------------------------
     0  => "00010" & "00" & "1100" & "000",	-- R-type
+    2  => "01000" & "00" & "0---" & "001",	-- J
+    3  => "01000" & "00" & "1001" & "001",	-- JAL
     4  => "00001" & "00" & "0---" & "010",	-- BEQ
+    5  => "00001" & "00" & "0---" & "100",	-- BNE
+    8  => "01000" & "00" & "1000" & "000",	-- ADDI
+    10 => "01100" & "00" & "1000" & "000",	-- SLTI
+    13 => "01011" & "00" & "1000" & "000",	-- ORI
+    15 => "10000" & "00" & "1000" & "000",	-- LUI
     35 => "01000" & "10" & "1010" & "000",	-- LW
-    43 => "01000" & "01" & "0---" & "000",	-- SW
+    43 => "01000" & "01" & "0010" & "000",	-- SW
     others => "00000000000000");		-- no-op
 
 begin
