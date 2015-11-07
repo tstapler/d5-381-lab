@@ -30,7 +30,7 @@ begin
     -- Pre-calculate arithmetic results
     a := to_integer(signed(data1));
     b := to_integer(signed(data2));
-    int_shamt := to_integer(signed(shamt));
+    int_shamt := to_integer(unsigned(shamt));
 
     sum := a + b;
     diff := a - b;

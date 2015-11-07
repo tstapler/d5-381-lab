@@ -1,0 +1,39 @@
+
+library IEEE;
+use IEEE.std_logic_1164.all;
+use work.mips32.all;
+
+
+entity n_bit_register is
+    generic(N: integer := 32);
+    port(i_Data : in m32_word := (others => '0');
+         i_CLK  : in m32_1bit;
+         i_WE   : in m32_1bit;
+         i_RST        : in m32_1bit;     -- Reset input
+         o_Data : out m32_word := (others => '0'));
+end n_bit_register;
+
+architecture structure of n_bit_register is
+
+    component dff
+      port(i_CLK        : in m32_1bit;     -- Clock input
+           i_RST        : in m32_1bit;     -- Reset input
+           i_WE         : in m32_1bit;     -- Write enable input
+           i_D          : in m32_1bit;     -- Data value input
+           o_Q          : out m32_1bit);   -- Data value output
+    end component;
+
+begin 
+    G1: for i in 0 to N-1 generate 
+
+        g_dff: dff
+            port MAP(i_D => i_DATA(i),
+                     i_CLK => i_CLK,
+                     i_RST => i_RST,
+                     i_WE => i_WE,
+                     o_Q => o_DATA(i)
+                     );
+    end generate;
+
+end structure;
+

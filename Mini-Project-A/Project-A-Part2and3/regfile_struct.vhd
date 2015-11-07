@@ -94,4 +94,4 @@ begin
     );
 
 
-end behavior;
+end structural;

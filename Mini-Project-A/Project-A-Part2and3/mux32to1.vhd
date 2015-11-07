@@ -1,25 +1,27 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
-
-type out_array is array(31 downto 0) of std_logic_vector(31 downto 0);
+use work.mips32.all;
 
 entity nbit_mux32to1 is 
-    generic(N : integer := 32)
-    port(data_in : in out_array;
-         sel     : in std_logic_vector (31 downto 0);
-         data_out: in std_logic_vector (31 downto 0);
+    port(data_in : in m32_regval_array := (others => x"00000000");
+         sel     : in m32_word;
+         data_out: out m32_word := x"00000000"
          );
 end nbit_mux32to1;
 
-architecture mixed of nbit_mux32to1 is
+architecture behavior of nbit_mux32to1 is
 
+begin
     selection : process (data_in, sel)
     begin
-        for y in 0 to 31 loop
+        for y in 1 to 31 loop
             if(sel(y) = '1') then
                 data_out <= data_in(y);
             end if;
         end loop;
+        if(sel(0) = '1') then
+            data_out <= x"00000000";
+        end if;
     end process selection;
 
 end behavior;
