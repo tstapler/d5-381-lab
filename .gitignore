@@ -3,3 +3,4 @@ transcript
 modelsim.ini
 vlog.opt
 vsim.wlf
+*.~lock.*
