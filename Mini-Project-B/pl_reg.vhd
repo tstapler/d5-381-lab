@@ -68,14 +68,26 @@ package pl_reg is
   -- The ID/EX register type
   type m32_IDEX is
     record
-      trace	 : m32_trace;	-- The trace of execution
-
+      -- Control Signals
+      trace     : m32_trace;	-- The trace of execution
       alusrc    : m32_2bits;	-- Source choice for the 2nd input of ALU
       aluop     : m32_3bits;    -- ALUop
-      -- CODE DELETED
+      memread   : m32_1bit;
+      memwrite  : m32_1bit;
+      regwrite  : m32_1bit;
+      regdst    : m32_1bit;
+      memtoreg  : m32_1bit;
+      link      : m32_1bit;
+      branch    : m32_1bit;
+      jump      : m32_1bit;
 
+      --Other Signals
       PC_plus_4 : m32_word;	-- PC plus 4
-      -- CODE DELETED
+      rdata1    : m32_word;
+      rdata2    : m32_word;
+      ext_imme  : m32_word;
+      rt        : m32_5bits;
+      rd        : m32_5bits;
     end record;
 
   -- Initial value for the IDEX register
@@ -92,11 +104,18 @@ package pl_reg is
     record
       trace	 : m32_trace;	-- The trace of execution
 
+      --Control Signals
+      regwrite : m32_1bit;
+      memtoreg : m32_1bit;
+      branch : m32_1bit;
+      memwrite : m32_1bit;
       memread    : m32_1bit;	-- Memory read signal
-      -- CODE DELETED
 
+      branch_addr : m32_word;
+      alu_zero : m32_1bit;
+      alu_result : m32_word;
+      rdata2 :m32_word;
       dst        : m32_5bits;   -- Destination register (either rt or rd)
-      -- CODE DELETED
     end record;
 
   -- Initial value for the EXMEM register
