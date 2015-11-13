@@ -301,8 +301,8 @@ begin
     port map (i		=> IFID_i,
     	      o		=> IFID_o,
     	      we	=> LUD_nostall,         -- Write only if no load-use
-    	      flush     => EX_br_taken,         -- Flush on taken branch/jump
-	      clock	=> clock);
+    	      flush => EX_br_taken,         -- Flush on taken branch/jump
+	          clock	=> clock);
 
   -- Control Unit, decode the op-code
   CONTROL1: control
@@ -324,10 +324,16 @@ begin
     port map (
       src1     => IFID_o.inst(25 downto 21),   -- rs
       src2     => IFID_o.inst(20 downto 16),   -- rt
+      dst      => MEMWB_o.dst,
+      wdata    => w_data, --------------------
+      rdata1   => IDEX_i.rdata1,
+      rdata2   => IDEX_i.rdata2,
+      WE       => MEMWB_o.regwrite,
+      clock    => clock);
       
 
   -- Pass pipeline signals 
-  IDEX_i.inst      <= IFID_o.inst(25 downto 0);
+     IDEX_i.inst  <= IFID_o.inst(25 downto 0);
   -- CODE DELETED
 
   ---------------------------------------------------------
@@ -341,13 +347,21 @@ begin
   IDEX_REG1 : IDEX_reg
     port map (i		=> IDEX_i,        -- IF stage output
     	      o		=> IDEX_o,        -- EX stage input
-              we        => LUD_nostall,   -- Write only if no load-use stall
-              flush     => IDEX_flush,    -- flush on taken branch/jump
-	      clock	=> clock);
+              we    => LUD_nostall,   -- Write only if no load-use stall
+              flush => IDEX_flush,    -- flush on taken branch/jump
+	          clock	=> clock);
 
   -- Flush the instruction coming to EX if any of the followings is
   -- detected: 1) load use, 2) taken branch
-  -- CODE DELETED
+    
+    EXMEM_flush_mux : mux4to1
+    port map(
+        input0 => "0",
+        input1 => "1",
+        input2 => "1",
+        input3 => "1",
+        sel    => loaduse & taken branch, -------------do
+        output => EXMEM_flush);
 
   -- FWD mux for the 1st register data
   -- CODE DELETED
