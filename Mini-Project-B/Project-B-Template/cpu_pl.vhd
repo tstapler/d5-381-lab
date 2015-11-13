@@ -284,7 +284,10 @@ begin
   NPC_MUX : mux2to1
     generic map (M => 32)
     port map (
-    -- CODE DELETED
+    	input0 => pc_plus_4,
+	input1 => ID_PC_target, 
+	sel => PCSrc,
+	output => PC_addr);
 
   -------------------------------------------------------------------------------
   -- The ID STAGE 
@@ -306,14 +309,22 @@ begin
     port map (
       opcode   => IFID_o.inst(31 downto 26),    -- opcode
       alusrc   => IDEX_i.alusrc, 
-      -- CODE DELETED 
+      aluop    => IDEX_i.aluop,
+      memread  => IDEX_i.memread,
+      memwrite => IDEX_i.memwrite,
+      regwrite => IDEX_i.regwrite,
+      regdst   => IDEX_i.regdst,
+      memtoreg => IDEX_i.memtoreg,
+      link     => IDEX_i.link,
+      branch   => IDEX_i.branch,
+      jump     => IDEX_i.jump);
 
   -- The register file with inverted clock. Note it's used in both ID and WB stages.
   REGFILE1 : regfile
     port map (
       src1     => IFID_o.inst(25 downto 21),   -- rs
       src2     => IFID_o.inst(20 downto 16),   -- rt
-      -- CODE DELETED
+      
 
   -- Pass pipeline signals 
   IDEX_i.inst      <= IFID_o.inst(25 downto 0);
