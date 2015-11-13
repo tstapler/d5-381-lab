@@ -5,11 +5,11 @@ use IEEE.std_logic_1164.all;
 
 entity n_bit_register is
     generic(N: integer := 32);
-    port(i_Data : in std_logic_vector(N-1 downto 0);
+    port(i_Data : in std_logic_vector(N-1 downto 0) := (others => '0');
          i_CLK  : in std_logic;
-         i_WE   : in std_logic;
-         i_RST        : in std_logic;     -- Reset input
-         o_Data : out std_logic_vector(N-1 downto 0));
+         i_WE   : in std_logic := '0';
+         i_RST  : in std_logic := '0';     -- Reset input
+         o_Data : out std_logic_vector(N-1 downto 0) := (others => '0'));
 end n_bit_register;
 
 architecture structure of n_bit_register is
@@ -26,11 +26,11 @@ begin
     G1: for i in 0 to N-1 generate 
 
         g_dff: dff
-            port MAP(i_D => i_DATA(i),
+            port MAP(i_D   => i_DATA(i),
                      i_CLK => i_CLK,
                      i_RST => i_RST,
-                     i_WE => i_WE,
-                     o_Q => o_DATA(i)
+                     i_WE  => i_WE,
+                     o_Q   => o_DATA(i)
                      );
     end generate;
 

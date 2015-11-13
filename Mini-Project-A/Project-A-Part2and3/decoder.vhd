@@ -7,8 +7,8 @@ use work.mips32.all;
 
 entity decoder5to32 is
 
-    port (i_D  : in m32_5bits;
-          o_D  : out m32_word);
+    port (i_D  : in m32_5bits := "00000";
+          o_D  : out m32_word := x"00000000");
 end decoder5to32;
 
 architecture mixed of decoder5to32 is

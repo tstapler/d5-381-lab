@@ -19,7 +19,7 @@ entity regfile is
        wdata  : in  m32_word := x"00000000";
        rdata1 : out m32_word := x"00000000";
        rdata2 : out m32_word := x"00000000";
-       WE     : in  m32_1bit := "0";
+       WE     : in  m32_1bit := '0';
        clock  : in  m32_1bit);
 end regfile;
 

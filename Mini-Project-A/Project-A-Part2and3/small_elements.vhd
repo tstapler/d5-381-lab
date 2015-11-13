@@ -144,7 +144,7 @@ end entity;
 
 architecture behavior of pc_mux is
 begin
-  PC_MUX : process (PC_plus_4, br_target, j_target, branch, jump, ALU_zero)
+  PC_MUX : process (PC_plus_4, br_target, j_target, branch, jump, ALU_zero, jr, jr_target)
   begin
     if jump = '1' then
       NPC <= j_target;
