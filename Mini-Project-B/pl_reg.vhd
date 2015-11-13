@@ -82,6 +82,7 @@ package pl_reg is
       jump      : m32_1bit;
 
       --Other Signals
+      inst      : m32_26bits;
       PC_plus_4 : m32_word;	-- PC plus 4
       rdata1    : m32_word;
       rdata2    : m32_word;
@@ -105,17 +106,17 @@ package pl_reg is
       trace	 : m32_trace;	-- The trace of execution
 
       --Control Signals
-      regwrite : m32_1bit;
-      memtoreg : m32_1bit;
-      branch : m32_1bit;
-      memwrite : m32_1bit;
-      memread    : m32_1bit;	-- Memory read signal
+      regwrite          : m32_1bit;
+      memtoreg          : m32_1bit;
+      branch            : m32_1bit;
+      memwrite          : m32_1bit;
+      memread           : m32_1bit;	-- Memory read signal
 
-      branch_addr : m32_word;
-      alu_zero : m32_1bit;
-      alu_result : m32_word;
-      rdata2 :m32_word;
-      dst        : m32_5bits;   -- Destination register (either rt or rd)
+      branch_addr       : m32_word;
+      alu_zero          : m32_1bit;
+      alu_result        : m32_word;
+      rdata2            : m32_word;
+      dst               : m32_5bits;   -- Destination register (either rt or rd)
     end record;
 
   -- Initial value for the EXMEM register
@@ -128,9 +129,12 @@ package pl_reg is
   -- The MEM/WB register type
   type m32_MEMWB is
     record
-      trace	 : m32_trace;	-- The trace of execution
-
+      trace      : m32_trace;	-- The trace of execution
       regwrite   : m32_1bit;	-- Register write
+      memtoreg   : m32_1bit;
+      memdata    : m32_word;
+      alu_result : m32_word;
+      dst        : m32_5bits;
       -- CODE DELETED
 
       dst        : m32_5bits;	-- Destination register (either rt or rd)

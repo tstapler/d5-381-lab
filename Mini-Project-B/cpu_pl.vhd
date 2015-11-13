@@ -140,10 +140,10 @@ architecture pipeline of cpu is
     port (PC_plus_4 : in  m32_word;	-- PC plus 4
           br_target : in  m32_word;	-- Branch target
           j_target  : in  m32_word;	-- Jump target
-	  jr_target : in  m32_word;	-- jr target
+	      jr_target : in  m32_word;	-- jr target
           branch    : in  m32_2bits;	-- Is it a branch?
           jump      : in  m32_1bit;	-- Is it a jump?
-	  jr        : in  m32_1bit;	-- Is it a jr?
+	      jr        : in  m32_1bit;	-- Is it a jr?
           alu_zero  : in  m32_1bit;	-- ALU result is zero?
           NPC       : out m32_word);	-- Next PC
   end component;
