@@ -220,9 +220,18 @@ architecture pipeline of cpu is
   -- 32-bit data values
   signal EX_fwd_rdata1  : m32_word;	-- The 1st register read data after forwarding 
   signal EX_fwd_rdata2  : m32_word;	-- The 2nd register read data after forwarding
+  signal ext_shamt	    : m32_word;	-- The extended shift amount
+  signal ext_imme	    : m32_word;	-- The extended immediate
+  signal alu_input1     : m32_word; -- alu input 1
+  signal alu_input2     : m32_word; -- alu input 2
+  signal lui_result     : m32_word;
   -- CODE DELETED
 
   -- Derived control signals
+  signal br_offset      : m32_word;
+  signal regsel         : m32_2bits;
+  signal temp_alu_result: m32_word;
+  signal j_target       : m32_word;
   -- CODE DELETED
 
   -- PC related signals
@@ -334,6 +343,7 @@ begin
 
   -- Pass pipeline signals 
      IDEX_i.inst  <= IFID_o.inst(25 downto 0);
+     IDEX_i.ext_imme	  <= (31 downto 16 => IFID_o.inst(15)) & IDIF_o.inst(15 downto 0);
   -- CODE DELETED
 
   ---------------------------------------------------------
@@ -342,6 +352,8 @@ begin
   -- For PC: 1) Form the jump target; 2) calculate branch target, 
   --   3) resolve branch/jump.
   ---------------------------------------------------------
+
+    reg_sel   <= IDEX_o.link & IDEX_o.regdst;
 
   -- IDEX pipeline register
   IDEX_REG1 : IDEX_reg
@@ -370,58 +382,92 @@ begin
   -- CODE DELETED
 
   -- Derived 32-bit data values from the instruction
-  -- CODE DELETED
+    ext_shamt	<= (31 downto 5 => IDEX_o.inst(10)) & IDEX_o.inst(10 downto 6);
+    lui_result  <= imme & x"0000";
 
   -- ALU_SRC mux for the 1st data operand
-  ALU_SRC1 : mux2to1
-  -- CODE DELETED
+    ALU_SRC1 : mux2to1
+    generic map(M    => 32)  
+    port map(
+             input0  => IDEX_o.rdata1,
+             input1  => ext_shamt,
+             sel     => use_shamt,
+             output  => alu_input1);
   
   -- ALU_SRC mux for the 2nd data operand
-  ALU_SRC2 : mux4to1 
-  -- CODE DELETED
+    ALU_SRC2 : mux4to1 
+    generic map(M   => 32)
+    port map(
+             input0 => IDEX_o.rdata2,
+             input1 => IDEX_o.ext_imme,
+             input2 => lui_result,
+             input3 => x"00000000",
+             sel    => IDEX_o.alusrc,
+             output => alu_input2);
 
   -- ALU Control unit, decode the funct code
-  ALU_CTRL1: alu_ctrl
+    ALU_CTRL1: alu_ctrl
     port map (
-      aluop	=> IDEX_o.aluop, 
-      funct	=> IDEX_o.inst(5 downto 0), 
-  -- CODE DELETED
+      aluop	    => IDEX_o.aluop, 
+      funct	    => IDEX_o.inst(5 downto 0), 
+      alu_code  => alucode,
+      jr 	    => jr,
+      use_shamt => use_shamt);
 
   -- The ALU
-  ALU1 : alu
+    ALU1 : alu
     port map (
-    -- CODE DELETED
+        data1       => alu_input1,
+        data2       => alu_input2,
+        alu_code    => alucode,
+        result      => temp_alu_result,
+        zero        => EXMEM_i.alu_zero );
+
 
   -- The merged dst and link mux
-  -- CODE DELETED
+    REG_MUX : mux4to1
+    port map(
+            input0  =>IDEX_o.rt,
+            input1  =>IDEX_o.rd,
+            input2  =>"11111",
+            input3  =>"00000",
+            sel     =>reg_sel,
+            output  =>EXMEM_i.dst);
 
   -- The link mux, replace alu_result with PC_plus_4 for JAL
-  -- CODE DELETED
+    LINK_MUX : mux2to1
+    port map(
+            input0  => temp_alu_result,
+            input1  => IDEX_o.PC_plus_4,
+            sel     => IDEX_o.link,
+            output  => EXMEM_i.alu_result);
 
   -- Form 32-bit branch offset
-  -- CODE DELETED
+  br_offset <= IDEX_o.ext_imme(29 downto 0) & "00";
 
   -- The branch target adder
   PC_ADDER2 : adder
     port map (
-    -- CODE DELETED
+        src1    => IDEX_o.PC_plus_4,
+        src2    => br_offset,
+        result  => EXMEM_i.branch_addr);
+
 
   -- Form the jump target
-  -- CODE DELETED
-
+    j_target <= IDEX_o.PC_plus_4(31 downto 0) & (IDEX_o.inst(25 downto 0)) & "00";
   
   -- The Branch Resolve Unit: Detect taken branch and jump, produce
   -- br_taken, br_target and signals.  Note: Jump is treated as a taken branch.
   BRU1 : BRU
-    port map (br_target => -- CODE DELETED,        -- Branch target
-              j_target  => -- CODE DELETED,	   -- Jump target
-              jr_target => -- CODE DELETED,	   -- jr target
-              branch    => -- CODE DELETED,        -- Is it a branch?
-              jump      => -- CODE DELETED,	   -- Is it a jump?
-	      jr        => -- CODE DELETED,        -- Is it a jr?
-              alu_zero  => -- CODE DELETED,        -- ALU result is zero?
-              br_taken  => -- CODE DELETED,        -- Taken branch/jump detected?
-              PC_target => -- CODE DELETED); 	   -- The PC target
+    port map (br_target => br_target,        -- Branch target
+              j_target  => EXMEM_i.branch_addr,	   -- Jump target
+              jr_target => IDEX_o.rdata1,	   -- jr target
+              branch    => IDEX_o.branch,        -- Is it a branch?
+              jump      => IDEX_o.jump,	   -- Is it a jump?
+	          jr        => ,        -- Is it a jr?
+              alu_zero  => IDEX_o.alu_zero,        -- ALU result is zero?
+              br_taken  => br_taken,        -- Taken branch/jump detected?
+              PC_target => ); 	   -- The PC target
 
   -- Pass pipeline signals 
   EXMEM_i.memread    <= IDEX_o.memread;
