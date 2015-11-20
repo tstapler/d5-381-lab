@@ -38,10 +38,10 @@ package pl_reg is
 
   -- Initial value for trace
   constant INIT_TRACE_VAL : m32_trace := (
-    PC        => x"00000000",
-    inst_text => "                     ",
-    flushed   => true,
-    o         => (
+      PC         => x"00000000",
+      inst_text  => "                     ",
+      flushed    => true,
+      o          => (
       reg_write  => '0',
       reg_dst    => "00000",
       reg_wdata  => x"00000000",

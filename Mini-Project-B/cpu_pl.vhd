@@ -247,6 +247,7 @@ architecture pipeline of cpu is
   ---------- MEM stage signals ----------
   signal EXMEM_o        : m32_EXMEM;    -- Output of the EXMEM register
   signal MEMWB_i        : m32_MEMWB := INIT_MEMWB_VAL;    -- Input of the MEMWB register
+  signal dmem_wdata : m32_word;
 
   ---------- WB stage signals -----------
   signal MEMWB_o        : m32_MEMWB := INIT_MEMWB_VAL;    -- Input of the MEMWB register
@@ -292,6 +293,8 @@ begin
       src2   => x"00000004", 	-- Second input fixed to 4
       result => IFID_i.PC_plus_4);
  
+ PCSrc <= EXMEM_o.branch & EXMEM_o.alu_zero;
+
   -- NPC Mux: Select PC_plus_4 or ID_PC_target
   -- Note: All branch and jumps are resolved at the EX stage
   --   in this implementation.
@@ -538,11 +541,12 @@ begin
 
   -- Load use hazard detection unit 
   LUD1 : LUD
-    port map (EX_memread => -- CODE DELETED
-              EX_dst     => -- CODE DELETED
-              ID_rs      => -- CODE DELETED
-              ID_rt      => -- CODE DELETED
-              LUD_stall  => -- CODE DELETED);
+    port map (EX_memread => IDEX_o.memread,
+              EX_dst     => IDEX_o.dst,
+              ID_rs      => IFID_o.rs
+              ID_rt      => IFID_o.rt
+              LUD_stall  => LUD_stall);
+
   -- Generated an inverted LUD_stall
   -- CODE DELETED
 
