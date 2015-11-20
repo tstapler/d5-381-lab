@@ -220,6 +220,7 @@ architecture pipeline of cpu is
   signal EX_fwd2  : m32_2bits; -- FWD selection for ALU input 2
   signal fwd_mux1 : m32_word;
   signal fwd_mux2 : m32_word;
+  signal flush_sel: m32_2bits;
 
   -- 32-bit data values
   signal EX_fwd_rdata1  : m32_word;	-- The 1st register read data after forwarding 
@@ -230,6 +231,7 @@ architecture pipeline of cpu is
   signal alu_input2     : m32_word; -- alu input 2
   signal lui_result     : m32_word;
   signal PC_addr        : m32_word;
+  signal NPC_addr       : m32_word;
   -- CODE DELETED
 
   -- Derived control signals
@@ -250,7 +252,6 @@ architecture pipeline of cpu is
 
   ---------- WB stage signals -----------
   signal MEMWB_o        : m32_MEMWB := INIT_MEMWB_VAL;    -- Input of the MEMWB register
-
   signal WB_wdata       : m32_word;     -- Register write data
 
   ---------- LUD and FWD signals ----------------
@@ -299,7 +300,7 @@ begin
     generic map (M => 32)
     port map (
     	input0  => IFID_i.PC_plus_4,
-	    input1  => ID_PC_target, 
+	    input1  => NPC_addr, 
 	    sel     => PCSrc,
 	    output  => PC_addr);
 
@@ -339,7 +340,7 @@ begin
       src1     => IFID_o.inst(25 downto 21),   -- rs
       src2     => IFID_o.inst(20 downto 16),   -- rt
       dst      => MEMWB_o.dst,
-      wdata    => w_data, --------------------
+      wdata    => WB_wdata, --------------------
       rdata1   => IDEX_i.rdata1,
       rdata2   => IDEX_i.rdata2,
       WE       => MEMWB_o.regwrite,
@@ -349,7 +350,8 @@ begin
   -- Pass pipeline signals 
      IDEX_i.inst        <= IFID_o.inst(25 downto 0);
      IDEX_i.ext_imme    <= (31 downto 16 => IFID_o.inst(15)) & IDIF_o.inst(15 downto 0);
-  -- CODE DELETED
+     
+     IDEX_i.PC_plus_4   <= IFID_o.PC_plus4;
 
   ---------------------------------------------------------
   -- The EX STAGE
@@ -359,6 +361,7 @@ begin
   ---------------------------------------------------------
 
     reg_sel   <= IDEX_o.link & IDEX_o.regdst;
+    flush_sel <= LUD_stall & EX_br_taken;
 
   -- IDEX pipeline register
   IDEX_REG1 : IDEX_reg
@@ -377,14 +380,14 @@ begin
         input1 => "1",
         input2 => "1",
         input3 => "1",
-        sel    => loaduse & taken branch, -------------do
+        sel    => flush_sel,
         output => EXMEM_flush);
 
   -- FWD mux for the 1st register data
     REG1_MUX : mux4to1
     port map(
             input0 => IDEX_o.rdata1,
-            input1 => wdata,
+            input1 => WB_wdata,
             input2 => EXMEM_o.alu_result,
             input3 => x"00000000",
             sel    => EX_fwd_1,
@@ -394,7 +397,7 @@ begin
     REG2_MUX : mux4to1
     port map(
             input0 => IDEX_o.rdata2,
-            input1 => wdata,
+            input1 => WB_wdata,
             input2 => EXMEM_o.alu_result,
             input3 => x"00000000",
             sel    => EX_fwd2,
@@ -478,42 +481,50 @@ begin
   -- The Branch Resolve Unit: Detect taken branch and jump, produce
   -- br_taken, br_target and signals.  Note: Jump is treated as a taken branch.
   BRU1 : BRU
-    port map (br_target => br_target,        -- Branch target
-              j_target  => EXMEM_i.branch_addr,	   -- Jump target
-              jr_target => IDEX_o.rdata1,	   -- jr target
-              branch    => IDEX_o.branch,        -- Is it a branch?
-              jump      => IDEX_o.jump,	   -- Is it a jump?
-	          jr        => IDEX_o.jr,        -- Is it a jr?
-              alu_zero  => IDEX_o.alu_zero,        -- ALU result is zero?
-              br_taken  => br_taken,        -- Taken branch/jump detected?
-              PC_target => PC_addr); 	   -- The PC target
+    port map (br_target => br_target,               -- Branch target
+              j_target  => EXMEM_i.branch_addr,	    -- Jump target
+              jr_target => IDEX_o.rdata1,	        -- jr target
+              branch    => IDEX_o.branch,           -- Is it a branch?
+              jump      => IDEX_o.jump,	            -- Is it a jump?
+	          jr        => IDEX_o.jr,               -- Is it a jr?
+              alu_zero  => IDEX_o.alu_zero,         -- ALU result is zero?
+              br_taken  => EX_br_taken,                -- Taken branch/jump detected?
+              PC_target => NPC_addr); 	            -- The PC target
 
   -- Pass pipeline signals 
   EXMEM_i.memread    <= IDEX_o.memread;
   EXMEM_i.memwrite   <= IDEX_o.memwrite;
- 
+  EXMEM_i.rdata2     <= fwd_mux2;
+  EXMEM_i.link       <= IDEX_o.link;
+  EXMEM_i.PC_plus_4  <= IDEX_o.PC_plus4;
 
   ------------------------------------------------------------------------
   -- The MEM STAGE 
   -- Data memory access
   -- For PC: Decide the next PC, is it PC_plus_4, br_target, or j_target?
-  ------------------------------------------------------------------------
+  ------------------------------------------------------------------------       
 
   -- IDEX pipeline register
   EXMEM_REG1 : EXMEM_reg
-    port map (i		=> EXMEM_i,	-- EX stage output
-    	      o		=> EXMEM_o,	-- MEM stage input
-	      we	=> '1',	 	-- No stall in this implementation
-	      flush     => '0',		-- No flush in this implementation
-	      clock	=> clock);
+    port map (i		    => EXMEM_i,	-- EX stage output
+    	      o		    => EXMEM_o,	-- MEM stage input
+	          we	    => '1',	 	-- No stall in this implementation
+	          flush     => '0',		-- No flush in this implementation
+	          clock	    => clock);
 
   -- Connect signals to the data memory
   dmem_addr  <= EXMEM_o.alu_result;
-  -- CODE DELETED
+  dmem_wdata <= EXMEM_o.rdata2;
 
   -- Pass pipeline signals 
-  MEMWB_i.regwrite  <= EXMEM_o.regwrite;
-  -- CODE DELETED
+  MEMWB_i.regwrite   <= EXMEM_o.regwrite;
+  MEMWB_i.memtoreg   <= EXMEM_o.memtoreg;
+
+  MEMWB_i.alu_result <= EXMEM_o.alu_result;
+  MEMWB_i.dst        <= EXMEM_o.dst;
+  MEMWB_i.memdata    <= dmem_rdata;
+  MEMWB_i.link       <= EXMEM_o.link;
+  MEMWB_i.PC_plus_4  <= EXMEM_o.PC_plus4;
 
   ------------------------------------------------------------
   -- The WB stage
@@ -521,14 +532,21 @@ begin
 
   -- MEMWB pipeline register
   MEMWB_REG1 : MEMWB_reg
-    port map (i		=> MEMWB_i,       -- MEM stage output
-    	      o		=> MEMWB_o,       -- WB stage input
-	      we	=> '1',	 	  -- No stall in this implementation
-	      flush     => '0',		  -- No flush in this implementation
-	      clock	=> clock);
+    port map (i		    => MEMWB_i,       -- MEM stage output
+    	      o		    => MEMWB_o,       -- WB stage input
+	          we	    => '1',	 	  -- No stall in this implementation
+	          flush     => '0',		  -- No flush in this implementation
+	          clock	    => clock);
 
   -- The merged memtoreg and link mux
-  -- CODE DELETED
+   memtoreg_MUX : mux4to1
+    port map(
+            input0  => MEMWB_o.memdata,
+            input1  => MEMWB_o.alu_result,
+            input2  => MEMWB_o.PC_plus_4,
+            input3  => x"00000000",
+            sel     => MEMWB_o.memtoreg & MEMWB_o.link,
+            output  => WB_wdata);
 
   ------------------------------------------------------------------
   -- Cross-stage components that use inputs from multiple stages 
@@ -567,10 +585,10 @@ begin
   -- work correctly.
   ---------------------------------------------------------------------
 
-  -- Update trace upen 1) instruction fetch, 1) memory write, and 2) register write
-  -- Note: If PC update is wrong, it will be detected when the mis-fetched
-  -- instruction arrives at the WB stage. 
-  TRACE_GENERATE : process
+    -- Update trace upen 1) instruction fetch, 1) memory write, and 2) register write
+    -- Note: If PC update is wrong, it will be detected when the mis-fetched
+    -- instruction arrives at the WB stage. 
+    TRACE_GENERATE : process
     -- The pipeline clock is 20 ns
     constant CCT_PL : time := 20 ns;
 
@@ -578,7 +596,7 @@ begin
     variable MEM_trace : m32_trace := INIT_TRACE_VAL;
     variable WB_trace  : m32_trace := INIT_TRACE_VAL;
 
-  begin
+    begin
     -- Mark the initial output as flushed. This is needed.
     trace.flushed <= true;
 
