@@ -214,8 +214,12 @@ architecture pipeline of cpu is
   signal IDEX_flush	: m32_1bit;	-- Flush IDEX or not
 
   --------- EX stage signals -------------
-  signal IDEX_o         : m32_IDEX;     -- Output of the IDEX register
-  signal EXMEM_i        : m32_EXMEM := INIT_EXMEM_VAL;    -- Input of the EXMEM register
+  signal IDEX_o   : m32_IDEX;     -- Output of the IDEX register
+  signal EXMEM_i  : m32_EXMEM                                    : = INIT_EXMEM_VAL;    -- Input of the EXMEM register
+  signal EX_fwd1  : m32_2bits; -- FWD selection for ALU input 1
+  signal EX_fwd2  : m32_2bits; -- FWD selection for ALU input 2
+  signal fwd_mux1 : m32_word;
+  signal fwd_mux2 : m32_word;
 
   -- 32-bit data values
   signal EX_fwd_rdata1  : m32_word;	-- The 1st register read data after forwarding 
@@ -529,14 +533,14 @@ begin
 
   -- Data forwarding unit
   FWD1 : FWD
-    port map (EX_rs        => -- CODE DELETED
-              EX_rt        => -- CODE DELETED
-              MEM_regwrite => -- CODE DELETED
-              MEM_dst      => -- CODE DELETED
-              WB_regwrite  => -- CODE DELETED
-              WB_dst       => -- CODE DELETED
-              EX_fwd1      => -- CODE DELETED
-              EX_fwd2      => -- CODE DELETED
+    port map (EX_rs        => IDEX_o.rs,
+              EX_rt        => IDEX_o.rt,
+              MEM_regwrite => EXMEM_o.regwrite,
+              MEM_dst      => EXMEM_o.dst,
+              WB_regwrite  => MEMWB_o.regwrite,
+              WB_dst       => MEMWB_o.dst
+              EX_fwd1      => EX_fwd1,
+              EX_fwd2      => EX_fwd2);
 
   ---------------------------------------------------------------------
   -- Set up trace signal. This is the ONLY section that behavioral 
