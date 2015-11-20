@@ -80,6 +80,7 @@ package pl_reg is
       link      : m32_1bit;
       branch    : m32_1bit;
       jump      : m32_1bit;
+      jr        : m32_1bit;
 
       --Other Signals
       inst      : m32_26bits;
@@ -87,6 +88,7 @@ package pl_reg is
       rdata1    : m32_word;
       rdata2    : m32_word;
       ext_imme  : m32_word;
+      ext_shamt : m32_5bits; 
       rt        : m32_5bits;
       rd        : m32_5bits;
     end record;
@@ -96,9 +98,24 @@ package pl_reg is
       trace 	=> INIT_TRACE_VAL,
       alusrc    => "00",
       aluop     => "000",
-      -- CODE DELETED
+      memread  => '0',
+      memwrite => '0',
+      regwrite => '0',
+      regdst => '0',
+      memtoreg => '0',
+      link => '0',
+      branch => '0',
+      jump  => '0',
+      jr => '0',
+
+      inst => "00000000000000000000000000",
       PC_plus_4 => x"00000000",
-      -- CODE DELETED
+      rdata1 => x"00000000",
+      rdata2 => x"00000000",
+      ext_imme => x"00000000",
+      ext_shamt => "00000",
+      rt => "00000",
+      rd => "00000");
     
   -- The EX/MEM register type
   type m32_EXMEM is
@@ -122,8 +139,18 @@ package pl_reg is
   -- Initial value for the EXMEM register
   constant INIT_EXMEM_VAL : m32_EXMEM := (
       trace	=> INIT_TRACE_VAL,
-      -- CODE DELETED
-      dst	=> "00000",
+
+      regwrite => '0',
+      memtoreg => '0',
+      branch => '0',
+      memwrite => '0',
+      memread => '0',
+      
+      branch_addr => x"00000000",
+      alu_zero => '0',
+      alu_result => x"00000000",
+      rdata2 => x"00000000",
+      dst	=> "00000");
       -- CODE DELETED
 
   -- The MEM/WB register type
@@ -134,7 +161,6 @@ package pl_reg is
       memtoreg   : m32_1bit;
       memdata    : m32_word;
       alu_result : m32_word;
-      dst        : m32_5bits;
       -- CODE DELETED
 
       dst        : m32_5bits;	-- Destination register (either rt or rd)
@@ -145,9 +171,11 @@ package pl_reg is
   constant INIT_MEMWB_VAL : m32_MEMWB := (
       trace	=> INIT_TRACE_VAL,
       regwrite  => '0',
-      -- CODE DELETED
-      dst       => "00000",
-      -- CODE DELETED
+      memtoreg => '0',
+      memdata => x"00000000",
+      alu_result => x"00000000",
+
+      dst       => "00000");
 end package;
 
 ------------------------------------------------------------
