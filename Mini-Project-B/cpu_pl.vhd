@@ -188,7 +188,7 @@ architecture pipeline of cpu is
           jr_target : in  m32_word;     -- jr target
           branch    : in  m32_2bits;    -- Is it a branch?
           jump      : in  m32_1bit;	-- Is it a jump?
-	  jr	    : in  m32_1bit;	-- Is it a jr?
+	      jr	    : in  m32_1bit;	-- Is it a jr?
           alu_zero  : in  m32_1bit;	-- ALU result is zero?
           br_taken  : out m32_1bit;     -- Taken branch/jump?
           PC_target : out m32_word); 	-- The PC target
@@ -225,6 +225,7 @@ architecture pipeline of cpu is
   signal alu_input1     : m32_word; -- alu input 1
   signal alu_input2     : m32_word; -- alu input 2
   signal lui_result     : m32_word;
+  signal PC_addr        : m32_word;
   -- CODE DELETED
 
   -- Derived control signals
@@ -293,10 +294,10 @@ begin
   NPC_MUX : mux2to1
     generic map (M => 32)
     port map (
-    	input0 => pc_plus_4,
-	input1 => ID_PC_target, 
-	sel => PCSrc,
-	output => PC_addr);
+    	input0  => IFID_i.PC_plus_4,
+	    input1  => ID_PC_target, 
+	    sel     => PCSrc,
+	    output  => PC_addr);
 
   -------------------------------------------------------------------------------
   -- The ID STAGE 
@@ -342,8 +343,8 @@ begin
       
 
   -- Pass pipeline signals 
-     IDEX_i.inst  <= IFID_o.inst(25 downto 0);
-     IDEX_i.ext_imme	  <= (31 downto 16 => IFID_o.inst(15)) & IDIF_o.inst(15 downto 0);
+     IDEX_i.inst        <= IFID_o.inst(25 downto 0);
+     IDEX_i.ext_imme    <= (31 downto 16 => IFID_o.inst(15)) & IDIF_o.inst(15 downto 0);
   -- CODE DELETED
 
   ---------------------------------------------------------
@@ -376,10 +377,24 @@ begin
         output => EXMEM_flush);
 
   -- FWD mux for the 1st register data
-  -- CODE DELETED
+    REG1_MUX : mux4to1
+    port map(
+            input0 => IDEX_o.rdata1,
+            input1 => wdata,
+            input2 => EXMEM_o.alu_result,
+            input3 => x"00000000",
+            sel    => EX_fwd_1,
+            output => fwd_mux1);
 
   -- FWD mux for the 2nd register data
-  -- CODE DELETED
+    REG2_MUX : mux4to1
+    port map(
+            input0 => IDEX_o.rdata2,
+            input1 => wdata,
+            input2 => EXMEM_o.alu_result,
+            input3 => x"00000000",
+            sel    => EX_fwd2,
+            output => fwd_mux2);
 
   -- Derived 32-bit data values from the instruction
     ext_shamt	<= (31 downto 5 => IDEX_o.inst(10)) & IDEX_o.inst(10 downto 6);
@@ -389,7 +404,7 @@ begin
     ALU_SRC1 : mux2to1
     generic map(M    => 32)  
     port map(
-             input0  => IDEX_o.rdata1,
+             input0  => fwd_mux1,
              input1  => ext_shamt,
              sel     => use_shamt,
              output  => alu_input1);
@@ -398,7 +413,7 @@ begin
     ALU_SRC2 : mux4to1 
     generic map(M   => 32)
     port map(
-             input0 => IDEX_o.rdata2,
+             input0 => fwd_mux2,
              input1 => IDEX_o.ext_imme,
              input2 => lui_result,
              input3 => x"00000000",
@@ -411,7 +426,7 @@ begin
       aluop	    => IDEX_o.aluop, 
       funct	    => IDEX_o.inst(5 downto 0), 
       alu_code  => alucode,
-      jr 	    => jr,
+      jr 	    => IDEX_o.jr,
       use_shamt => use_shamt);
 
   -- The ALU
@@ -464,15 +479,15 @@ begin
               jr_target => IDEX_o.rdata1,	   -- jr target
               branch    => IDEX_o.branch,        -- Is it a branch?
               jump      => IDEX_o.jump,	   -- Is it a jump?
-	          jr        => ,        -- Is it a jr?
+	          jr        => IDEX_o.jr,        -- Is it a jr?
               alu_zero  => IDEX_o.alu_zero,        -- ALU result is zero?
               br_taken  => br_taken,        -- Taken branch/jump detected?
-              PC_target => ); 	   -- The PC target
+              PC_target => PC_addr); 	   -- The PC target
 
   -- Pass pipeline signals 
   EXMEM_i.memread    <= IDEX_o.memread;
   EXMEM_i.memwrite   <= IDEX_o.memwrite;
-  -- CODE DELETED
+ 
 
   ------------------------------------------------------------------------
   -- The MEM STAGE 
