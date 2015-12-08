@@ -53,16 +53,20 @@ package pl_reg is
   -- The IF/ID register type
   type m32_IFID is
     record        
-      trace	 : m32_trace;	-- The trace of execution
+      trace     : m32_trace;	-- The trace of execution
 
-      PC_plus_4  : m32_word;    -- Next sequential PC
-      inst       : m32_word; 	-- The binary instruction
+      PC_plus_4 : m32_word;    -- Next sequential PC
+      inst      : m32_word; 	-- The binary instruction
+      rs        : m32_5bits;
+      rt        : m32_5bits;
     end record;
 
   -- Initial value for the IFID register
   constant INIT_IFID_VAL : m32_IFID := (
     trace     	=> INIT_TRACE_VAL,
     PC_plus_4 	=> x"00000000",
+    rs => "00000",
+    rt => "00000",
     inst	=> x"00000000");
   
   -- The ID/EX register type
@@ -78,9 +82,10 @@ package pl_reg is
       regdst    : m32_1bit;
       memtoreg  : m32_1bit;
       link      : m32_1bit;
-      branch    : m32_1bit;
+      branch    : m32_2bits;
       jump      : m32_1bit;
       jr        : m32_1bit;
+      aluzero   : m32_1bit;
 
       --Other Signals
       inst      : m32_26bits;
@@ -88,9 +93,13 @@ package pl_reg is
       rdata1    : m32_word;
       rdata2    : m32_word;
       ext_imme  : m32_word;
-      ext_shamt : m32_5bits; 
+      ext_shamt : m32_word; 
+      shamt : m32_5bits;
+      dst       : m32_5bits;
       rt        : m32_5bits;
       rd        : m32_5bits;
+      flushed   : boolean;
+      rs : m32_5bits;
     end record;
 
   -- Initial value for the IDEX register
@@ -104,18 +113,23 @@ package pl_reg is
       regdst => '0',
       memtoreg => '0',
       link => '0',
-      branch => '0',
+      branch => "00",
       jump  => '0',
       jr => '0',
+      aluzero => '0',
 
       inst => "00000000000000000000000000",
       PC_plus_4 => x"00000000",
       rdata1 => x"00000000",
       rdata2 => x"00000000",
       ext_imme => x"00000000",
-      ext_shamt => "00000",
+      ext_shamt => x"00000000",
+      shamt => "00000",
       rt => "00000",
-      rd => "00000");
+      dst => "00000",
+      rs => "00000",
+      rd => "00000",
+      flushed => false);
     
   -- The EX/MEM register type
   type m32_EXMEM is
@@ -125,15 +139,17 @@ package pl_reg is
       --Control Signals
       regwrite          : m32_1bit;
       memtoreg          : m32_1bit;
-      branch            : m32_1bit;
+      branch            : m32_2bits;
       memwrite          : m32_1bit;
       memread           : m32_1bit;	-- Memory read signal
+      link : m32_1bit;
 
       branch_addr       : m32_word;
       alu_zero          : m32_1bit;
       alu_result        : m32_word;
       rdata2            : m32_word;
       dst               : m32_5bits;   -- Destination register (either rt or rd)
+      flushed : boolean;
     end record;
 
   -- Initial value for the EXMEM register
@@ -142,15 +158,17 @@ package pl_reg is
 
       regwrite => '0',
       memtoreg => '0',
-      branch => '0',
+      branch => "00",
       memwrite => '0',
       memread => '0',
+      link => '0',
       
       branch_addr => x"00000000",
       alu_zero => '0',
       alu_result => x"00000000",
       rdata2 => x"00000000",
-      dst	=> "00000");
+      dst	=> "00000",
+	flushed => true);
       -- CODE DELETED
 
   -- The MEM/WB register type
@@ -161,9 +179,11 @@ package pl_reg is
       memtoreg   : m32_1bit;
       memdata    : m32_word;
       alu_result : m32_word;
+      link : m32_1bit;
       -- CODE DELETED
 
       dst        : m32_5bits;	-- Destination register (either rt or rd)
+      flushed : boolean;
       -- CODE DELETED
     end record;
 
@@ -174,8 +194,10 @@ package pl_reg is
       memtoreg => '0',
       memdata => x"00000000",
       alu_result => x"00000000",
+      link => '0',
 
-      dst       => "00000");
+      dst       => "00000",
+	flushed => false);
 end package;
 
 ------------------------------------------------------------
@@ -252,6 +274,9 @@ begin
         -- NOTE: Clear ALUop too, because ALU control may assert EX_jr when it 
         -- sees ALUop being R-type and a funct field that matches JR's funct code
         r.regwrite  <= '0';
+        r.memwrite <= '0';
+        r.aluop <= "000";
+        r.flushed <= true;
         -- CODE DELETED
 
         -- Pass trace and mark instruction as flushed
@@ -296,6 +321,7 @@ begin
       if flush = '1' then
         -- Clear register and memory write signals
         r.regwrite  <= '0';
+        r.memwrite <= '0';
         -- CODE DELETE
       
         -- Pass trace and mark the instruction as flushed
@@ -340,10 +366,11 @@ begin
       if flush = '1' then
         -- Clear register write signal and mark instruction as "flushed"
         r.regwrite  <= '0';
+        r.flushed <= true;
 
         -- Pass trace and mark the instruction as flushed
         r.trace.PC  	  <= i.trace.PC;
-	r.trace.inst_text <= i.trace.inst_text;
+        r.trace.inst_text <= i.trace.inst_text;
         r.trace.flushed   <= true;
       elsif we = '1' then
         r <= i;

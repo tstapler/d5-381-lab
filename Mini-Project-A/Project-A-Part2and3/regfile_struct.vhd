@@ -24,8 +24,10 @@ entity regfile is
 end regfile;
 
 architecture structural of regfile is
-    read_out_1 <= "00000000000000000000000000000000";
-    read_out_2 <= "00000000000000000000000000000000";
+    signal write_addr, read_addr_1, read_addr_2 :std_logic_vector(31 downto 0);
+    type out_array is array(31 downto 0) of std_logic_vector(31 downto 0);
+    signal register_out : out_array;
+
     component decoder5to32
         port (i_D  : in std_logic_vector(4 downto 0);
               o_D  : out std_logic_vector(31 downto 0));
@@ -47,14 +49,11 @@ architecture structural of regfile is
     end component;
 
     component nbit_mux32to1
-        port(data_in : in out_array,
-             sel     : in std_logic_vector (31 downto 0),
+        port(data_in : in out_array;
+             sel     : in std_logic_vector (31 downto 0);
              data_out: in std_logic_vector (31 downto 0));
     end component;
 
-    signal write_addr, read_addr_1, read_addr_2 :std_logic_vector(31 downto 0);
-    type out_array is array(31 downto 0) of std_logic_vector(31 downto 0);
-    signal register_out : out_array;
 
 begin
 

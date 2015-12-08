@@ -12,7 +12,7 @@ use IEEE.numeric_std.all;
 use work.mips32.all;
 
 entity adder is
-  generic (DELAY : time := 19.0 ns);
+  generic (DELAY : time := 19.0 ns; N : integer := 32);
   port (src1    : in  m32_word;
         src2    : in  m32_word;
         result  : out m32_word);

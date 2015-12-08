@@ -111,7 +111,7 @@ begin
 
   -- The data memory, with a fixed latency in meory read
   dmem0 : mem
-    generic map (mif_filename => "dmem-bubblesort.txt")
+    generic map (mif_filename => "../Mini-Project-A/Project-A-Part1/dmem-bubblesort.txt")
     port map (
       address => c0.dmem_addr(9 downto 2), 
       byteena => c0.dmem_wmask, 

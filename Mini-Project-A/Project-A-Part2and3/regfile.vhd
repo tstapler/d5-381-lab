@@ -12,15 +12,15 @@ use IEEE.numeric_std.all;
 use work.mips32.all;
 
 entity regfile is
-  generic (DELAY : time := 9.5 ns; N : integer := 32);
-  port(src1   : in  m32_5bits:= "00000";
-       src2   : in  m32_5bits:= "00000";
-       dst    : in  m32_5bits := "00000";
-       wdata  : in  m32_word := x"00000000";
-       rdata1 : out m32_word := x"00000000";
-       rdata2 : out m32_word := x"00000000";
-       WE     : in  m32_1bit := '0';
-       clock  : in  m32_1bit);
+	generic (DELAY : time := 9.5 ns; N : integer := 32);
+	port(src1   : in  m32_5bits:= "00000";
+	     src2   : in  m32_5bits:= "00000";
+	     dst    : in  m32_5bits := "00000";
+	     wdata  : in  m32_word := x"00000000";
+	     rdata1 : out m32_word := x"00000000";
+	     rdata2 : out m32_word := x"00000000";
+	     WE     : in  m32_1bit := '0';
+	     clock  : in  m32_1bit);
 end regfile;
 
 --architecture behavior of regfile is
@@ -65,71 +65,72 @@ end regfile;
 --  end process;
 --end behavior;
 architecture structural of regfile is
-    signal write_addr, read_addr_1, read_addr_2 :m32_word;
-    signal register_out : m32_regval_array := (others => x"00000000");
+	signal write_addr, read_addr_1, read_addr_2 :m32_word;
+	signal register_out : m32_regval_array := (others => x"00000000");
 
-    component decoder5to32
-        port (i_D  : in m32_5bits;
-              o_D  : out m32_word);
-    end component;
+	component decoder5to32
+		port (i_D  : in m32_5bits;
+		      o_D  : out m32_word);
+	end component;
 
-    component n_bit_register
-      port(i_CLK        : in m32_1bit;     -- Clock input
-           i_RST        : in m32_1bit;     -- Reset input
-           i_WE         : in m32_1bit;     -- Write enable input
-           i_Data          : in m32_word;     -- Data value input
-           o_Data          : out m32_word);   -- Data value output
-    end component;
+	component n_bit_register
+		port(i_CLK        : in m32_1bit;     -- Clock input
+		     i_RST        : in m32_1bit;     -- Reset input
+		     i_WE         : in m32_1bit;     -- Write enable input
+		     i_Data          : in m32_word;     -- Data value input
+		     o_Data          : out m32_word);   -- Data value output
+	end component;
 
-    component n_in_lab3_multiplexer_struct
-        port(i_A  : in m32_word;
-             i_B  : in m32_word;
-             i_C  : in m32_1bit;
-             o_F  : out m32_word);
-    end component;
+	component n_in_lab3_multiplexer_struct
+		port(i_A  : in m32_word;
+		     i_B  : in m32_word;
+		     i_C  : in m32_1bit;
+		     o_F  : out m32_word);
+	end component;
 
-    component nbit_mux32to1
-        port(data_in : in m32_regval_array;
-             sel     : in m32_word;
-             data_out: out m32_word := x"00000000");
-    end component;
+	component nbit_mux32to1
+		port(data_in : in m32_regval_array;
+		     sel     : in m32_word;
+		     data_out: out m32_word := x"00000000");
+	end component;
 
 begin
 
-    in_decoder : decoder5to32
-        port map(i_D => dst,
-                o_D => write_addr);
+	in_decoder : decoder5to32
+	port map(i_D => dst,
+		 o_D => write_addr);
 
-    G1: for j in 1 to N-1 generate
-        signal internal_enable : m32_1bit;
-        internal_enable <=   (write_addr(j) and WE);
-        register_j : n_bit_register
-            port map(i_CLK        => clock,     -- Clock input
-                     i_RST        => '0',     -- Reset input
-                     i_WE         => internal_enable,     -- Write enable input
-                     i_Data          => wdata,     -- Data value input
-                     o_Data          => register_out(j));   -- Data value output
-    end generate;
+	G1: for j in 1 to N-1 generate
+	begin
+		signal internal_enable : m32_1bit;
+		internal_enable <=   (write_addr(j) and WE);
+		register_j : n_bit_register
+		port map(i_CLK        => clock,     -- Clock input
+			 i_RST        => '0',     -- Reset input
+			 i_WE         => internal_enable,     -- Write enable input
+			 i_Data          => wdata,     -- Data value input
+			 o_Data          => register_out(j));   -- Data value output
+	end generate;
 
-    out_decoder_1 : decoder5to32
-        port map(i_D => src1,
-                o_D => read_addr_1);
+	out_decoder_1 : decoder5to32
+	port map(i_D => src1,
+		 o_D => read_addr_1);
 
-    out_decoder_2 : decoder5to32
-        port map(i_D => src2,
-                o_D => read_addr_2);
+	out_decoder_2 : decoder5to32
+	port map(i_D => src2,
+		 o_D => read_addr_2);
 
-        out_mux_1: nbit_mux32to1
-        port map(data_in => register_out,
-                 sel => read_addr_1,
-                data_out => rdata1
-        );
+	out_mux_1: nbit_mux32to1
+	port map(data_in => register_out,
+		 sel => read_addr_1,
+		 data_out => rdata1
+	 );
 
-        out_mux_2: nbit_mux32to1
-        port map(data_in => register_out,
-                 sel => read_addr_2,
-                data_out => rdata2
-    );
+	out_mux_2: nbit_mux32to1
+	port map(data_in => register_out,
+		 sel => read_addr_2,
+		 data_out => rdata2
+	 );
 
 
 end structural;
