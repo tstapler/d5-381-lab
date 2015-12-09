@@ -166,6 +166,7 @@ package pl_reg is
       branch_addr => x"00000000",
       alu_zero => '0',
       alu_result => x"00000000",
+      rdata1 => x"00000000",
       rdata2 => x"00000000",
       dst	=> "00000",
 	flushed => true);

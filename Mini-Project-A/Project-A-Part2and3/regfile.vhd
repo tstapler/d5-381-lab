@@ -67,18 +67,20 @@ end regfile;
 architecture structural of regfile is
 	signal write_addr, read_addr_1, read_addr_2 :m32_word;
 	signal register_out : m32_regval_array := (others => x"00000000");
+	signal internal_enable : m32_1bit;
 
 	component decoder5to32
 		port (i_D  : in m32_5bits;
 		      o_D  : out m32_word);
 	end component;
 
-	component n_bit_register
-		port(i_CLK        : in m32_1bit;     -- Clock input
-		     i_RST        : in m32_1bit;     -- Reset input
-		     i_WE         : in m32_1bit;     -- Write enable input
-		     i_Data          : in m32_word;     -- Data value input
-		     o_Data          : out m32_word);   -- Data value output
+
+	component reg
+	generic (M  : integer := 32);			-- Size of the register
+	port (D     : in  m32_vector(M-1 downto 0);  	-- Data input
+	      Q     : out m32_vector(M-1 downto 0);  	-- Data output
+	      WE    : in  m32_1bit;                  	-- Write enableenable
+	      clock : in  m32_1bit);                 	-- The reset signal
 	end component;
 
 	component n_in_lab3_multiplexer_struct
@@ -102,14 +104,12 @@ begin
 
 	G1: for j in 1 to N-1 generate
 	begin
-		signal internal_enable : m32_1bit;
 		internal_enable <=   (write_addr(j) and WE);
-		register_j : n_bit_register
-		port map(i_CLK        => clock,     -- Clock input
-			 i_RST        => '0',     -- Reset input
-			 i_WE         => internal_enable,     -- Write enable input
-			 i_Data          => wdata,     -- Data value input
-			 o_Data          => register_out(j));   -- Data value output
+		register_j : reg
+		port map(clock        => clock,     -- Clock input
+			 WE         => internal_enable,     -- Write enable input
+			 D          => wdata,     -- Data value input
+			 Q          => register_out(j));   -- Data value output
 	end generate;
 
 	out_decoder_1 : decoder5to32

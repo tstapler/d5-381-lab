@@ -217,9 +217,9 @@ architecture pipeline of cpu is
     ---------- IF stage signals -------------
     signal IFID_i         : m32_IFID := INIT_IFID_VAL;     -- Input of the IFID register
 
-    signal IF_PC          : m32_word;	-- PC for the current inst
-    signal IF_NPC         : m32_word;	-- PC for the next inst, started with 0x00080000
-    signal PCSrc          : m32_1bit;
+    signal IF_PC          : m32_word := x"00000000";	-- PC for the current inst
+    signal IF_NPC         : m32_word := x"00000000";	-- PC for the next inst, started with 0x00080000
+    signal PCSrc          : m32_1bit := '0';
 
     ---------- ID stage signals -------------
     signal IFID_o         : m32_IFID;     -- Output of the IFID register
@@ -229,38 +229,37 @@ architecture pipeline of cpu is
     --------- EX stage signals -------------
     signal IDEX_o   : m32_IDEX;     -- Output of the IDEX register
     signal EXMEM_i  : m32_EXMEM                                    := INIT_EXMEM_VAL;    -- Input of the EXMEM register
-    signal EX_fwd1  : m32_2bits; -- FWD selection for ALU input 1
-    signal EX_fwd2  : m32_2bits; -- FWD selection for ALU input 2
-    signal flush_sel: m32_2bits;
-    signal reg_sel  : m32_2bits;
-    signal use_shamt: m32_1bit;
-    signal alucode   : m32_4bits;
-    signal there_is_branch : m32_1bit;
+    signal EX_fwd1  : m32_2bits := "00"; -- FWD selection for ALU input 1
+    signal EX_fwd2  : m32_2bits := "00"; -- FWD selection for ALU input 2
+    signal flush_sel: m32_2bits := "00";
+    signal reg_sel  : m32_2bits := "00";
+    signal use_shamt: m32_1bit := '0';
+    signal alucode   : m32_4bits := "0000";
+    signal there_is_branch : m32_1bit := '0';
 
     -- 32-bit data values
-    signal EX_fwd_rdata1 : m32_word;	-- The 1st register read data after forwarding
-    signal EX_fwd_rdata2 : m32_word;	-- The 2nd register read data after forwarding
-    signal ext_shamt     : m32_word;	-- The extended shift amount
-    signal ext_imme      : m32_word;	-- The extended immediate
-    signal alu_input1    : m32_word; -- alu input 1
-    signal alu_input2    : m32_word; -- alu input 2
-    signal lui_result    : m32_word;
-    signal PC_addr       : m32_word;
-    signal NPC_addr      : m32_word;
-    signal fwd_mux1      : m32_word;
-    signal fwd_mux2      : m32_word;
+    signal EX_fwd_rdata1 : m32_word := x"00000000";	-- The 1st register read data after forwarding
+    signal EX_fwd_rdata2 : m32_word := x"00000000";	-- The 2nd register read data after forwarding
+    signal ext_shamt     : m32_word := x"00000000";	-- The extended shift amount
+    signal ext_imme      : m32_word := x"00000000";	-- The extended immediate
+    signal alu_input1    : m32_word := x"00000000"; -- alu input 1
+    signal alu_input2    : m32_word := x"00000000"; -- alu input 2
+    signal lui_result    : m32_word := x"00000000";
+    signal PC_addr       : m32_word := x"00000000";
+    signal NPC_addr      : m32_word := x"00000000";
+    signal fwd_mux1      : m32_word := x"00000000";
+    signal fwd_mux2      : m32_word := x"00000000";
     -- CODE DELETED
 
     -- Derived control signals
-    signal br_offset      : m32_word;
-    signal regsel         : m32_2bits;
-    signal temp_alu_result: m32_word;
-    signal j_target       : m32_word;
+    signal br_offset      : m32_word := x"00000000";
+    signal temp_alu_result: m32_word := x"00000000";
+    signal j_target       : m32_word := x"00000000";
     -- CODE DELETED
 
     -- PC related signals
     signal EX_br_taken	: m32_1bit := '0'; -- Taken branch/jump detected?
-    signal EX_PC_target   : m32_word;     -- The PC target
+    signal EX_PC_target   : m32_word := x"00000000";     -- The PC target
                                           -- CODE DELETED
 
     ---------- MEM stage signals ----------
@@ -269,13 +268,13 @@ architecture pipeline of cpu is
 
     ---------- WB stage signals -----------
     signal MEMWB_o        : m32_MEMWB := INIT_MEMWB_VAL;    -- Input of the MEMWB register
-    signal WB_wdata       : m32_word;     -- Register write data
-    signal write_data_sel : m32_2bits;
+    signal WB_wdata       : m32_word := x"00000000";     -- Register write data
+    signal write_data_sel : m32_2bits := "00";
 
     ---------- LUD and FWD signals ----------------
     signal LUD_stall   : m32_1bit := '0'; -- LUD stall signal
     signal LUD_nostall : m32_1bit := '1'; -- LUD stall and non-stall signals
-    signal FWD_sel1, FWD_sel2 : m32_2bits; -- FWD select signal
+    signal FWD_sel1, FWD_sel2 : m32_2bits := "00"; -- FWD select signal
 
 begin
 
@@ -301,7 +300,6 @@ begin
 
     -- Send PC to instruction memory's address port
     -- Receive the returned instruction
-    imem_addr   <= IF_PC;
     IFID_i.inst <= inst;
 
     -- The 1st PC adder, for PC plus 4
@@ -421,7 +419,7 @@ begin
                 input1 => WB_wdata,
                 input2 => EXMEM_o.alu_result,
                 input3 => x"00000000",
-                sel    => EX_fwd1,
+		sel    => EX_fwd1, --??? Check if actuall connected to something
                 output => fwd_mux1);
 
     -- FWD mux for the 2nd register data
@@ -432,7 +430,7 @@ begin
                 input1 => WB_wdata,
                 input2 => EXMEM_o.alu_result,
                 input3 => x"00000000",
-                sel    => EX_fwd2,
+		sel    => EX_fwd2, --??? Check if actuall connected to something
                 output => fwd_mux2);
 
     -- Derived 32-bit data values from the instruction
@@ -549,6 +547,7 @@ begin
     -- Connect signals to the data memory
     dmem_addr  <= EXMEM_o.alu_result;
     dmem_wdata <= EXMEM_o.rdata2;
+    dmem_write <= EXMEM_o.memwrite;
 
     -- Pass pipeline signals 
     MEMWB_i.regwrite   <= EXMEM_o.regwrite;
@@ -584,6 +583,11 @@ begin
                 input3  => x"00000000",
                 sel     => write_data_sel,
                 output  => WB_wdata);
+
+    --Pass pipeline signals
+    reg_wdata <= WB_wdata;
+    reg_write <= MEMWB_i.regwrite;
+    reg_dst  <= EXMEM_o.dst;
 
     ------------------------------------------------------------------
     -- Cross-stage components that use inputs from multiple stages 
