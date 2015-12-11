@@ -308,18 +308,6 @@ begin
 			 src2   => x"00000004", 	-- Second input fixed to 4
 			 result => IFID_i.PC_plus_4);
 	
--- ??? I dont believe this is needed becasue we just use EX_br_taken as the selector - Tyler
---	PC_SRC_OR : or2
---	port map ( src1 => EXMEM_o.branch(1),
---		   src2 => EXMEM_o.branch(0),
---		   result => there_is_branch);
---
---	PC_SRC_AND : and2
---	port map (
---			 src1 => there_is_branch,
---			 src2 => EXMEM_o.alu_zero,
---			 result => PCSrc);
---
     -- NPC Mux: Select PC_plus_4 or ID_PC_target
     -- Note: All branch and jumps are resolved at the EX stage
     --   in this implementation.
@@ -382,6 +370,7 @@ begin
 	IDEX_i.rs <= IFID_o.inst(25 downto 21);
 	IDEX_i.rt <= IFID_o.inst(20 downto 16);
 	IDEX_i.rd <= IFID_o.inst(15 downto 11);
+	IDEX_i.shamt <= IFID_o.inst(10 downto 6);
 
 	IDEX_i.PC_plus_4   <= IFID_o.PC_plus_4;
 
@@ -392,7 +381,6 @@ begin
     --   3) resolve branch/jump.
     ---------------------------------------------------------
 
-	reg_sel   <= IDEX_o.link & IDEX_o.regdst;
 	flush_sel <= LUD_stall & EX_br_taken;
 
     -- IDEX pipeline register
@@ -481,6 +469,7 @@ begin
 			 result   => temp_alu_result,
 			 zero     => EXMEM_i.alu_zero );
 
+	reg_sel   <= IDEX_o.link & IDEX_o.regdst;
 
     -- The merged dst and link mux
 	REG_DST_MUX : mux4to1
@@ -519,7 +508,7 @@ begin
     -- The Branch Resolve Unit: Detect taken branch and jump, produce
     -- br_taken, br_target and signals.  Note: Jump is treated as a taken branch.
 	BRU1 : BRU
-	port map (br_target => EXMEM_i.branch_addr,               -- Branch target ??? Dont know what this should be
+	port map (br_target => EXMEM_i.branch_addr,               -- Branch target 
 		  j_target  => j_target,	    -- Jump target
 		  jr_target => IDEX_o.rdata1,	        -- jr target
 		  branch    => IDEX_o.branch,           -- Is it a branch?
@@ -531,6 +520,7 @@ begin
 
     -- Pass pipeline signals 
 	EXMEM_i.regwrite   <= IDEX_o.regwrite;
+	EXMEM_i.memtoreg <= IDEX_o.memtoreg;
 	EXMEM_i.memread    <= IDEX_o.memread;
 	EXMEM_i.memwrite   <= IDEX_o.memwrite;
 	EXMEM_i.rdata2     <= fwd_mux2;
@@ -640,7 +630,7 @@ begin
     -- instruction arrives at the WB stage. 
 	TRACE_GENERATE : process
 	-- The pipeline clock is 20 ns
-		constant CCT_PL : time := 40 ns; -- Changed to 40 For testing
+		constant CCT_PL : time := 20 ns; -- Changed to 40 For testing
 
 	-- Trace signals for the MEM and WB stages
 		variable MEM_trace : m32_trace := INIT_TRACE_VAL;
@@ -659,7 +649,7 @@ begin
 
 	    -- Wait right before the next rising clock edge
 	    -- Note that the testbench will check the trace at 19.9 ns 
-			wait for 39.6 ns; 
+			wait for 19.6 ns; 
 
 	    -- IF stage: Update PC on instruction fetch for any instruction, reset
 	    -- the other fields
@@ -672,7 +662,7 @@ begin
 						dmem_write => '0',
 						dmem_addr  => x"00000000",
 						dmem_wdata => x"00000000",
-						dmem_wmask => "0000");
+						dmem_wmask => "1111");
 
 	    -- ID stage: Copy trace from IFID to IDEX
 			IDEX_i.trace <= IFID_o.trace;

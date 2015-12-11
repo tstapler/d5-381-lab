@@ -229,6 +229,7 @@ architecture behavior of FWD is
 begin
 	forward : process (EX_rs, EX_rt, MEM_regwrite, MEM_dst, WB_regwrite, WB_dst, EX_fwd1, EX_fwd2)
 	begin
+		-- Mem Hazard
 		if MEM_regwrite = '1' 
 		and (not (MEM_dst = "00000")) 
 		and ( MEM_dst = EX_rs) 
