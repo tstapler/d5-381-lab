@@ -169,7 +169,7 @@ use IEEE.std_logic_1164.all;
 use work.mips32.all;
 
 entity BRU is
-	port (br_target : in m32_word;    -- Branch target ??? Dont know what this should be
+	port (br_target : in m32_word;    -- Branch target 
 	      j_target  : in m32_word;   -- Jump target
 	      jr_target : in m32_word;   -- jr target
 	      branch    : in m32_2bits;   -- Is it a branch?
@@ -185,19 +185,21 @@ architecture behavior of BRU is
 begin
 	branch_unit : process (j_target, jr_target, branch, jump, jr, alu_zero)
 	begin
-		br_taken <= '0';
-		PC_target <= x"00000000";
 		if jump = '1' then
 			PC_target <= j_target;
+			br_taken <= '1';
 		elsif jr = '1' then
 			PC_target <= jr_target;
-	--elsif br_taken = '1' then ??? Not sure what to do
+			br_taken <= '1';
 		elsif branch = "01" and ALU_zero = '1' then
 			PC_target <= br_target;
 			br_taken <= '1';
 		elsif branch = "10" and ALU_zero = '0' then
 			PC_target <= br_target;
 			br_taken <= '1';
+		else 
+			br_taken <= '0';
+			PC_target <= x"00000000";
 		end if;
 	end process;
 end behavior;

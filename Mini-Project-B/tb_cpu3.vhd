@@ -204,7 +204,7 @@ begin
     wait until rising_edge(clock);
 
     -- Wait right before the next rising clock edge
-    wait for 19.9 ns;
+    wait for 39.9 ns;
 
     if not t.flushed then
       -- Compare current PC values
@@ -234,7 +234,7 @@ begin
     else
       -- If the WB instruction from cpu1 is actually a pipeline bubble, do not advance
       -- the clock of cpu0
-      cpu0_clock_enable <= '1';
+      cpu0_clock_enable <= '0';
     end if;
   end process;
 end behavior;

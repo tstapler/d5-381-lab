@@ -65,9 +65,8 @@ end regfile;
 --  end process;
 --end behavior;
 architecture structural of regfile is
-	signal write_addr, read_addr_1, read_addr_2 :m32_word;
+	signal write_addr, read_addr_1, read_addr_2 : m32_word := x"00000000";
 	signal register_out : m32_regval_array := (others => x"00000000");
-	signal internal_enable : m32_1bit;
 
 	component decoder5to32
 		port (i_D  : in m32_5bits;
@@ -103,8 +102,14 @@ begin
 		 o_D => write_addr);
 
 	G1: for j in 1 to N-1 generate
+	signal internal_enable : m32_1bit := '0';
 	begin
+		process (write_addr, WE) is
+		begin
 		internal_enable <=   (write_addr(j) and WE);
+			
+		end process;
+
 		register_j : reg
 		port map(clock        => clock,     -- Clock input
 			 WE         => internal_enable,     -- Write enable input

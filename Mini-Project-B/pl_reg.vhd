@@ -150,6 +150,7 @@ package pl_reg is
       rdata1            : m32_word;
       rdata2            : m32_word;
       dst               : m32_5bits;   -- Destination register (either rt or rd)
+      PC_plus_4 : m32_word;
       flushed : boolean;
     end record;
 
@@ -170,6 +171,7 @@ package pl_reg is
       rdata1 => x"00000000",
       rdata2 => x"00000000",
       dst	=> "00000",
+      PC_plus_4 => x"00000000",
 	flushed => true);
       -- CODE DELETED
 
@@ -185,6 +187,7 @@ package pl_reg is
       -- CODE DELETED
 
       dst        : m32_5bits;	-- Destination register (either rt or rd)
+      PC_plus_4 : m32_word;
       flushed : boolean;
       -- CODE DELETED
     end record;
@@ -199,6 +202,7 @@ package pl_reg is
       link => '0',
 
       dst       => "00000",
+      PC_plus_4 => x"00000000",
 	flushed => false);
 end package;
 

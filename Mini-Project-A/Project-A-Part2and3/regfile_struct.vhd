@@ -24,9 +24,6 @@ entity regfile is
 end regfile;
 
 architecture structural of regfile is
-    signal write_addr, read_addr_1, read_addr_2 :std_logic_vector(31 downto 0);
-    type out_array is array(31 downto 0) of std_logic_vector(31 downto 0);
-    signal register_out : out_array;
 
     component decoder5to32
         port (i_D  : in std_logic_vector(4 downto 0);
@@ -55,6 +52,9 @@ architecture structural of regfile is
     end component;
 
 
+    signal write_addr, read_addr_1, read_addr_2 :std_logic_vector(31 downto 0);
+    type out_array is array(31 downto 0) of std_logic_vector(31 downto 0);
+    signal register_out : out_array;
 begin
 
     in_decoder : decoder5to32
