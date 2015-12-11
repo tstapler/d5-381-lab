@@ -147,6 +147,7 @@ package pl_reg is
       branch_addr       : m32_word;
       alu_zero          : m32_1bit;
       alu_result        : m32_word;
+      rdata1            : m32_word;
       rdata2            : m32_word;
       dst               : m32_5bits;   -- Destination register (either rt or rd)
       flushed : boolean;

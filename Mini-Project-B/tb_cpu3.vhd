@@ -12,7 +12,7 @@ end tb_cpu3;
 
 architecture behavior of tb_cpu3 is
   -- The pipeline clock is 1/5 of the CCT for single-cycle implementation
-  constant CCT_PL : time := 20 ns;
+  constant CCT_PL : time := 40 ns; -- Changed to 40 just for testing
 
   -- The cpu component
   component cpu is
@@ -47,7 +47,7 @@ architecture behavior of tb_cpu3 is
   end component;
 
   -- Configuration of components
-  for cpu0 : cpu use entity work.cpu(behavioral);
+  for cpu0 : cpu use entity work.cpu(scp);
   for cpu3 : cpu use entity work.cpu(pipeline);
   
   -- Interfaces for CPUs
@@ -234,7 +234,7 @@ begin
     else
       -- If the WB instruction from cpu1 is actually a pipeline bubble, do not advance
       -- the clock of cpu0
-      cpu0_clock_enable <= '0';
+      cpu0_clock_enable <= '1';
     end if;
   end process;
 end behavior;

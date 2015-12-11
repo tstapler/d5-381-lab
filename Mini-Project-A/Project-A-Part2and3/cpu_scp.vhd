@@ -174,7 +174,7 @@ begin
                src2 => x"00000004",
                result => PC_plus_4);
 
-  imem_addr <= PC; --???
+  imem_addr <= PC;
 
   -- Debugging: Convert instruction from binary to text
   inst_text <= mips2text(inst);

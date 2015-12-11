@@ -22,10 +22,10 @@ end reg;
 architecture behavior of reg is
 	signal reg_buf : m32_vector(M-1 downto 0) := (others => '0');
 begin
-  -- Read is unclocked
+	-- Read is unclocked
 	Q <= reg_buf;
 
-  -- Write is guarded by clock
+	-- Write is guarded by clock
 	REG : process (clock)
 	begin
 		if rising_edge(clock) and WE = '1' then
@@ -55,10 +55,10 @@ end PC_reg;
 architecture behavior of PC_reg is
 	signal reg_buf : m32_word;
 begin
-  -- Read is unclocked
+	-- Read is unclocked
 	PC <= reg_buf;
 
-  -- Write is guarded by clock, and reset on the first rising clock edge
+	-- Write is guarded by clock, and reset on the first rising clock edge
 	REG : process (clock)
 		variable reset_done : boolean := false;
 	begin
@@ -170,33 +170,35 @@ use work.mips32.all;
 
 entity BRU is
 	port (br_target : in m32_word;    -- Branch target ??? Dont know what this should be
-		  j_target  : in m32_word;   -- Jump target
-		  jr_target : in m32_word;   -- jr target
-		  branch    : in m32_2bits;   -- Is it a branch?
-		  jump      : in m32_1bit;   -- Is it a jump?
-		  jr        : in m32_1bit;   -- Is it a jr?
-		  alu_zero  : in m32_1bit;   -- ALU result is zero?
-		  br_taken  : out m32_1bit;   -- Taken branch/jump detected?
-		  PC_target : out m32_word); -- The PC target
+	      j_target  : in m32_word;   -- Jump target
+	      jr_target : in m32_word;   -- jr target
+	      branch    : in m32_2bits;   -- Is it a branch?
+	      jump      : in m32_1bit;   -- Is it a jump?
+	      jr        : in m32_1bit;   -- Is it a jr?
+	      alu_zero  : in m32_1bit;   -- ALU result is zero?
+	      br_taken  : out m32_1bit;   -- Taken branch/jump detected?
+	      PC_target : out m32_word); -- The PC target
 end BRU;
 
 architecture behavior of BRU is
 
 begin
-	branch_unit : process (j_target, jr_target, branch, jump, jr, alu_zero, br_taken, PC_target)
-		begin
-	if jump = '1' then
-		PC_target <= j_target;
-	elsif jr = '1' then
-		PC_target <= jr_target;
+	branch_unit : process (j_target, jr_target, branch, jump, jr, alu_zero)
+	begin
+		br_taken <= '0';
+		PC_target <= x"00000000";
+		if jump = '1' then
+			PC_target <= j_target;
+		elsif jr = '1' then
+			PC_target <= jr_target;
 	--elsif br_taken = '1' then ??? Not sure what to do
-	elsif branch = "01" and ALU_zero = '1' then
-		PC_target <= br_target;
-		br_taken <= '1';
-	elsif branch = "10" and ALU_zero = '0' then
-		PC_target <= br_target;
-		br_taken <= '1';
-	end if;
+		elsif branch = "01" and ALU_zero = '1' then
+			PC_target <= br_target;
+			br_taken <= '1';
+		elsif branch = "10" and ALU_zero = '0' then
+			PC_target <= br_target;
+			br_taken <= '1';
+		end if;
 	end process;
 end behavior;
 
@@ -209,14 +211,14 @@ use IEEE.std_logic_1164.all;
 use work.mips32.all;
 
 entity FWD is
-    port (EX_rs        : in m32_5bits;  -- rs from EX
-              EX_rt        : in m32_5bits;  -- rt from EX
-              MEM_regwrite : in m32_1bit;   -- regwrite from MEM
-              MEM_dst      : in m32_5bits;  -- Destination register from MEM
-              WB_regwrite  : in m32_1bit;   -- regwrite from MEM
-              WB_dst       : in m32_5bits;   -- Destination register from MEM
-              EX_fwd1      : out m32_2bits;  -- FWD selection for ALU input 1
-              EX_fwd2      : out m32_2bits); -- FWD selection for ALU input 1
+	port (EX_rs        : in m32_5bits;  -- rs from EX
+	      EX_rt        : in m32_5bits;  -- rt from EX
+	      MEM_regwrite : in m32_1bit;   -- regwrite from MEM
+	      MEM_dst      : in m32_5bits;  -- Destination register from MEM
+	      WB_regwrite  : in m32_1bit;   -- regwrite from MEM
+	      WB_dst       : in m32_5bits;   -- Destination register from MEM
+	      EX_fwd1      : out m32_2bits;  -- FWD selection for ALU input 1
+	      EX_fwd2      : out m32_2bits); -- FWD selection for ALU input 1
 end FWD;
 
 architecture behavior of FWD is 
@@ -224,18 +226,21 @@ architecture behavior of FWD is
 -- RegisterRd is the Register Destination - rs or rd field
 begin
 	forward : process (EX_rs, EX_rt, MEM_regwrite, MEM_dst, WB_regwrite, WB_dst, EX_fwd1, EX_fwd2)
-		begin
-	if MEM_regwrite = '1' 
-	and (not (MEM_dst = "00000")) 
-	and ( MEM_dst = EX_rs) 
-	and not (MEM_regwrite = '1' and (not (MEM_dst = "00000")) and (not (MEM_dst = EX_rs))) then
-       	EX_fwd1 <= "01";
-	end if;
-	if MEM_regwrite = '1' 
-	and not (MEM_dst = "00000") 
-	and (MEM_dst = EX_rt) 
-	and not (MEM_regwrite = '1' and (not (MEM_dst = "00000")) and (not (MEM_dst = EX_rt))) then
-       	EX_fwd2 <= "01";
-	end if;
+	begin
+		if MEM_regwrite = '1' 
+		and (not (MEM_dst = "00000")) 
+		and ( MEM_dst = EX_rs) 
+		and not (MEM_regwrite = '1' and (not (MEM_dst = "00000")) and (not (MEM_dst = EX_rs))) then
+			EX_fwd1 <= "01";
+		end if;
+		if MEM_regwrite = '1' 
+		and not (MEM_dst = "00000") 
+		and (MEM_dst = EX_rt) 
+		and not (MEM_regwrite = '1' and (not (MEM_dst = "00000")) and (not (MEM_dst = EX_rt))) then
+			EX_fwd2 <= "01";
+		end if;
+	--Hardcode both to 0 until fwd is fully implemented
+		EX_fwd1 <= "00";
+		EX_fwd2 <= "00";
 	end process;
 end behavior;

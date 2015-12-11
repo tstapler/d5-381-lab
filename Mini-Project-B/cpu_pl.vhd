@@ -218,7 +218,7 @@ architecture pipeline of cpu is
     signal IFID_i         : m32_IFID := INIT_IFID_VAL;     -- Input of the IFID register
 
     signal IF_PC          : m32_word := x"00000000";	-- PC for the current inst
-    signal IF_NPC         : m32_word := x"00000000";	-- PC for the next inst, started with 0x00080000
+    signal IF_NPC         : m32_word := x"00080000";	-- PC for the next inst, started with 0x00080000
     signal PCSrc          : m32_1bit := '0';
 
     ---------- ID stage signals -------------
@@ -327,9 +327,11 @@ begin
     generic map (M => 32)
     port map (
                  input0  => IFID_i.PC_plus_4,
-                 input1  => NPC_addr, 
+                 input1  => EX_PC_target, 
                  sel     => PCSrc,
-                 output  => PC_addr);
+		 output  => IF_NPC);
+
+    imem_addr <= IF_PC;
 
     -------------------------------------------------------------------------------
     -- The ID STAGE 
@@ -377,6 +379,9 @@ begin
     -- Pass pipeline signals 
     IDEX_i.inst        <= IFID_o.inst(25 downto 0);
     IDEX_i.ext_imme    <= (31 downto 16 => IFID_o.inst(15)) & IFID_o.inst(15 downto 0);
+    IDEX_i.rs <= IFID_o.inst(25 downto 21);
+    IDEX_i.rt <= IFID_o.inst(20 downto 16);
+    IDEX_i.rd <= IFID_o.inst(15 downto 11);
 
     IDEX_i.PC_plus_4   <= IFID_o.PC_plus_4;
 
@@ -522,9 +527,10 @@ begin
               jr        => IDEX_o.jr,               -- Is it a jr?
               alu_zero  => EXMEM_i.alu_zero,         -- ALU result is zero?
               br_taken  => EX_br_taken,                -- Taken branch/jump detected?
-              PC_target => NPC_addr); 	            -- The PC target
+              PC_target => EX_PC_target); 	            -- The PC target
 
     -- Pass pipeline signals 
+    EXMEM_i.regwrite   <= IDEX_o.regwrite;
     EXMEM_i.memread    <= IDEX_o.memread;
     EXMEM_i.memwrite   <= IDEX_o.memwrite;
     EXMEM_i.rdata2     <= fwd_mux2;
@@ -548,6 +554,7 @@ begin
     dmem_addr  <= EXMEM_o.alu_result;
     dmem_wdata <= EXMEM_o.rdata2;
     dmem_write <= EXMEM_o.memwrite;
+    dmem_wmask <= "1111";
 
     -- Pass pipeline signals 
     MEMWB_i.regwrite   <= EXMEM_o.regwrite;
@@ -577,8 +584,8 @@ begin
     memtoreg_MUX : mux4to1
     generic map( M => 32)
     port map(
-                input0  => MEMWB_o.memdata,
-                input1  => MEMWB_o.alu_result,
+                input0  => MEMWB_o.alu_result,
+                input1  => MEMWB_o.memdata,
                 input2  => x"00000000", --TODO: Add passed branch_target
                 input3  => x"00000000",
                 sel     => write_data_sel,
@@ -632,7 +639,7 @@ begin
     -- instruction arrives at the WB stage. 
     TRACE_GENERATE : process
         -- The pipeline clock is 20 ns
-        constant CCT_PL : time := 20 ns;
+        constant CCT_PL : time := 40 ns;
 
         -- Trace signals for the MEM and WB stages
         variable MEM_trace : m32_trace := INIT_TRACE_VAL;
